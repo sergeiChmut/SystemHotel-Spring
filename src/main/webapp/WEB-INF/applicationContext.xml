@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myCookieUtils"
+          class="by.chmut.hotel.dao.rememberme.CookieUtils">
+
+    </bean>
+
+    <bean id="myReservationDAO"
+          class="by.chmut.hotel.dao.impl.ReservationDaoImpl">
+
+    </bean>
+
+    <bean id="myRoomDAO"
+          class="by.chmut.hotel.dao.impl.RoomDaoImpl">
+
+    </bean>
+
+    <bean id="myRoomDTO"
+          class="by.chmut.hotel.dao.impl.RoomDtoImpl">
+
+    </bean>
+
+    <bean id="myUserDAO"
+          class="by.chmut.hotel.dao.impl.UserDaoImpl">
+        <property name="CookieUtils" ref="myCookieUtils" />
+    </bean>
+
+    <bean id="dtoService"
+          class="by.chmut.hotel.service.impl.DtoServiceImpl">
+
+        <property name="roomDto" ref="myRoomDTO" />
+    </bean>
+
+    <bean id="reservationService"
+          class="by.chmut.hotel.service.impl.ReservationServiceImpl">
+
+        <property name="roomDao" ref="myRoomDAO" />
+        <property name="reservationDao" ref="myReservationDAO" />
+    </bean>
+
+    <bean id="roomService"
+          class="by.chmut.hotel.service.impl.RoomServiceImpl">
+
+        <property name="roomDao" ref="myRoomDAO" />
+    </bean>
+
+    <bean id="userService"
+          class="by.chmut.hotel.service.impl.UserServiceImpl">
+
+        <property name="userDao" ref="myUserDAO" />
+    </bean>
+
+</beans>
