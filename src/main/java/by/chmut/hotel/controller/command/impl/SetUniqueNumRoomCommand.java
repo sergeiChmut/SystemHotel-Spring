@@ -1,15 +1,19 @@
 package by.chmut.hotel.controller.command.impl;
 
-import by.chmut.hotel.controller.command.Command;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class SetUniqueNumRoomCommand implements Command {
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) {
+
+@Controller
+
+public class SetUniqueNumRoomCommand {
+
+    @RequestMapping(value = "/setUniqueNumber")
+
+    public void setId(HttpServletRequest req) {
 
         int tempNumber = Integer.parseInt(req.getParameter("tempNumber"));
 

@@ -1,30 +1,29 @@
 package by.chmut.hotel.controller.command.impl;
 
-
-import by.chmut.hotel.controller.command.Command;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 
 import static by.chmut.hotel.controller.command.impl.constant.Constants.REMEMBER_ME_COOKIE;
 
+@Controller
+public class LogoutCommand {
 
-public class LogoutCommand implements Command {
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @GetMapping(value = "/logout")
+
+    public String mainPage(HttpServletRequest req, HttpServletResponse resp) {
 
         req.getSession().removeAttribute("user");
 
         removeRememberMe(req, resp);
 
-        String contextPath = req.getContextPath();
-
-        resp.sendRedirect(contextPath + "/frontController?commandName=" + req.getSession().getAttribute("prevPage"));
-
+        return "redirect:"+req.getHeader("referer");
     }
+
 
     private void removeRememberMe(HttpServletRequest req, HttpServletResponse resp) {
         Cookie[] cookies = req.getCookies();

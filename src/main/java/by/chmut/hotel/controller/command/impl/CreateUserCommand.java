@@ -1,36 +1,44 @@
 package by.chmut.hotel.controller.command.impl;
 
 import by.chmut.hotel.bean.User;
-import by.chmut.hotel.controller.command.Command;
 import by.chmut.hotel.controller.command.validation.encoder.Encoder;
+import by.chmut.hotel.controller.domain.LoginData;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.ServiceFactory;
+import by.chmut.hotel.service.UserService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-public class CreateUserCommand implements Command {
 
-    private ServiceFactory factory = ServiceFactory.getInstance();
+@Controller
+public class CreateUserCommand {
 
-    private static final Logger logger = Logger.getLogger(CreateUserCommand.class);
+    @Autowired
+    private UserService userService;
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
-        String contextPath = req.getContextPath();
+
+    @RequestMapping(value = "/create_user", method = RequestMethod.POST)
+
+    public String createUser(HttpServletRequest req, HttpServletResponse resp,
+                        @ModelAttribute("loginData") LoginData loginData) {
 
         String message = "haveuser";
 
-        String url = contextPath + "/frontController?commandName=add_account";
+        String url = "add_account";
 
         try {
-            User user = factory.getUserService().addUser(req.getParameter("login"), Encoder.encode(req.getParameter("password")),
-                    req.getParameter("firstName"), req.getParameter("lastName"),
-                    req.getParameter("email"), req.getParameter("phone"), req.getParameter("country"), req.getParameter("city"),
-                    req.getParameter("address"), req.getParameter("zip"));
+            User user = userService.addUser(loginData.getLogin(), Encoder.encode(loginData.getPassword()),
+                    loginData.getFirstName(), loginData.getLastName(),
+                    loginData.getEmail(), loginData.getPhone(), loginData.getCountry(), loginData.getCity(),
+                    loginData.getAddress(), loginData.getZip());
 
             if (user != null) {
 
@@ -38,7 +46,7 @@ public class CreateUserCommand implements Command {
 
                 message = "";
 
-                url = contextPath + "/frontController?commandName=reservation";
+                url = "/reservation";
             }
 
         } catch (ServiceException e) {
@@ -50,6 +58,8 @@ public class CreateUserCommand implements Command {
 
         req.getSession().setAttribute("errorMsg", message);
 
-        resp.sendRedirect(url);
+        return "redirect:"+url;
+
     }
+
 }

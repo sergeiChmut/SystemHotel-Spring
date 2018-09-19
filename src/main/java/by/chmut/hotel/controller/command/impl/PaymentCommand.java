@@ -2,30 +2,28 @@ package by.chmut.hotel.controller.command.impl;
 
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
-import by.chmut.hotel.controller.command.Command;
 import by.chmut.hotel.controller.command.validation.PaymentSender;
+import by.chmut.hotel.service.ReservationService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.ServiceFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.MAIN_PAGE;
+@Controller
+public class PaymentCommand {
 
-public class PaymentCommand implements Command {
-
-    private ServiceFactory factory = ServiceFactory.getInstance();
+    @Autowired
+    private ReservationService reservationService;
 
     private static final Logger logger = Logger.getLogger(PaymentCommand.class);
 
-
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    @RequestMapping(value = "/payment")
+    public String payment(HttpServletRequest req) {
 
         List<Room> temporaryRooms = (List<Room>) req.getSession().getAttribute("tempRooms");
 
@@ -35,15 +33,14 @@ public class PaymentCommand implements Command {
 
             removeAttributes(req.getSession());
 
-            String contextPath = req.getContextPath();
-
-            resp.sendRedirect(contextPath + "/frontController?commandName=payment&success=ok");
+            return "/payment?success=ok";
 
         } else {
 
-            req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);
+            return "/payment";
         }
     }
+
 
     private boolean makePaymentWithParams(HttpServletRequest req) {
 
@@ -80,7 +77,7 @@ public class PaymentCommand implements Command {
                     if (count == maxTries) {
                         break;
                     }
-                    factory.getReservationService().setPaidStatus(user.getId(), room);
+                    reservationService.setPaidStatus(user.getId(), room);
 
                     break;
 

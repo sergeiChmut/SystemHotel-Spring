@@ -22,7 +22,7 @@
             <div class="creditCardForm col-xs-6 col-xs-offset-3">
                 <div class="payment">
                     <form class="form-horizontal"
-                          action="${pageContext.request.contextPath}/frontController?commandName=payment"
+                          action="${pageContext.request.contextPath}/payment"
                           method="post">
                         <![CDATA[
                           <legend>

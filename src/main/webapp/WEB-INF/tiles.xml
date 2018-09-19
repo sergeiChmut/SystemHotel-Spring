@@ -4,7 +4,7 @@
         "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
     <definition name="default" template="/WEB-INF/view/layout/template.jspx">
-        <put-attribute name="title" value="Web project"/>
+        <put-attribute name="title" value=""/>
         <put-attribute name="header" value="/WEB-INF/view/common/header.jspx"/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
@@ -14,8 +14,29 @@
         <put-attribute name="title" value="Home"/>
         <put-attribute name="body" value="/WEB-INF/view/pages/main.jspx"/>
     </definition>
-    <definition name="/login" extends="default">
-        <put-attribute name="title" value="Login"/>
-        <put-attribute name="body" value="/WEB-INF/view/pages/main.jspx"/>
+    <definition name="/search" extends="default">
+        <put-attribute name="title" value="Search"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/search.jspx"/>
     </definition>
+    <definition name="/reservation" extends="default">
+        <put-attribute name="title" value="Reservation"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/reservation.jspx"/>
+    </definition>
+    <definition name="/error" extends="default">
+        <put-attribute name="title" value="Error"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/error.jspx"/>
+    </definition>
+    <definition name="/add_account" extends="default">
+        <put-attribute name="title" value="Add_account"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/autorization.jspx"/>
+    </definition>
+    <definition name="/payment" extends="default">
+        <put-attribute name="title" value="Payment"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/payment.jspx"/>
+    </definition>
+    <definition name="/administration" extends="default">
+        <put-attribute name="title" value="Administration"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/administration.jspx"/>
+    </definition>
+
 </tiles-definitions>

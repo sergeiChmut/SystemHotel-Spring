@@ -1,27 +1,27 @@
 package by.chmut.hotel.controller.command.impl;
 
-import by.chmut.hotel.controller.command.Command;
+import by.chmut.hotel.service.DtoService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.ServiceFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDate;
 
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.MAIN_PAGE;
+@Controller
+public class AdminCommand {
 
-public class AdminCommand implements Command {
+    @Autowired
+    private DtoService dtoService;
 
-    private ServiceFactory factory = ServiceFactory.getInstance();
+    private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
-    private static final Logger logger = Logger.getLogger(AdminCommand.class);
+    @RequestMapping(value = "/administration")
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public String admin(HttpServletRequest req) {
 
         req.getSession().removeAttribute("errorAdmin");
 
@@ -29,7 +29,7 @@ public class AdminCommand implements Command {
 
         try {
 
-            req.getSession().setAttribute("client", factory.getDtoService().getRoomWithCheckInOrDepartureForThisDay(LocalDate.now()));
+            req.getSession().setAttribute("client", dtoService.getRoomWithCheckInOrDepartureForThisDay(LocalDate.now()));
 
         } catch (ServiceException e) {
 
@@ -38,6 +38,6 @@ public class AdminCommand implements Command {
             req.getSession().setAttribute("errorAdmin", "errorAdmin");
         }
 
-        req.getRequestDispatcher(MAIN_PAGE).forward(req,resp);
+        return "/administration";
     }
 }

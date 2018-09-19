@@ -34,7 +34,7 @@ public class LoginCommand {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
 
-    public String mainPage(HttpServletRequest req, HttpServletResponse resp,
+    public String login(HttpServletRequest req, HttpServletResponse resp,
                            @RequestParam("login") String login,@RequestParam("password") String password,
                            @RequestParam(value = "remember", required = false) String remember) {
 
@@ -59,7 +59,7 @@ public class LoginCommand {
 
                 errorMessage = "";
 
-                url = "/home";//+req.getSession().getAttribute("prevPage");
+                url = req.getHeader("referer");//+req.getSession().getAttribute("prevPage");
 
                 if (remember != null) {
 
@@ -76,7 +76,7 @@ public class LoginCommand {
 
         session.setAttribute("errorMsg", errorMessage);
 
-        return url;
+        return "redirect:"+url;
 
     }
 

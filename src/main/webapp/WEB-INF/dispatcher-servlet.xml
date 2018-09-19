@@ -30,7 +30,7 @@
 
 	<bean id="messageSource"
 		  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="messages"/>
+		<property name="basename" value="classpath:messages"/>
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 
@@ -48,6 +48,11 @@
 			<property name="paramName" value="locale"/>
 		</bean>
 	</mvc:interceptors>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5000000"/>
+	</bean>
+
 	<mvc:resources mapping="/resources/**" location="/assests/" />
 
 	<mvc:annotation-driven />

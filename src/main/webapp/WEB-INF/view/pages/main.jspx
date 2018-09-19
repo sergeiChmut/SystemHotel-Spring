@@ -200,7 +200,7 @@
                                     Всего : ${room.price/100}
                                 </h4>
                                 <div class="row" style="height: 40px">
-                                    <a href="${pageContext.request.contextPath}/frontController?commandName=search" style="color: #c09c76"><fmt:message key="main.more" bundle="${i18n}"/></a>
+                                    <a href="${pageContext.request.contextPath}/search" style="color: #c09c76"><fmt:message key="main.more" bundle="${i18n}"/></a>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
         <div class="row">
             <div class="row col-xs-4 col-xs-offset-4">
                 <a style="color: #2b669a;font-size: large "
-                   href="${pageContext.request.contextPath}/frontController?commandName=search"
+                   href="${pageContext.request.contextPath}/search"
                    class="btn-link"><fmt:message key="main.show" bundle="${i18n}"/></a>
             </div>
         </div>

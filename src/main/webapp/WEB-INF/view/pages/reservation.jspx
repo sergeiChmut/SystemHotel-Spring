@@ -61,7 +61,7 @@
             <div class="container">
                 <div class="alert alert-warning col-xs-6 left-arrow">
                     <strong><fmt:message key="reserv.warning" bundle="${i18n}"/></strong>
-                    <a href="${pageContext.request.contextPath}/frontController?commandName=payment"><fmt:message
+                    <a href="${pageContext.request.contextPath}/payment"><fmt:message
                             bundle="${i18n}" key="reserv.payorder"/></a>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 <div class="container" style="height: 800px">
                     <div class="alert alert-warning col-xs-6 left-arrow">
                         <strong><fmt:message key="${emptyMsg}" bundle="${i18n}"/></strong>
-                        <a href="${pageContext.request.contextPath}/frontController?commandName=search"><fmt:message
+                        <a href="${pageContext.request.contextPath}/search"><fmt:message
                                 bundle="${i18n}" key="reserv.search"/></a>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                                         <td class="col-xs-2"><a href="#" class="btn bg-info"><fmt:message
                                                 bundle="${i18n}" key="reserv.about"/></a></td>
                                         <td class="col-xs-1"><a id="${room.temporaryNumber}"
-                                                                href="${pageContext.request.contextPath}/frontController?commandName=reservation&amp;delete=room"
+                                                                href="${pageContext.request.contextPath}/reservation?delete=room"
                                                                 class="delete"><fmt:message bundle="${i18n}"
                                                                                             key="reserv.delete"/></a>
                                         </td>
@@ -138,7 +138,7 @@
                                 bundle="${i18n}" key="reserv.rule"/></a><fmt:message bundle="${i18n}"
                                                                                      key="reserv.ready"/></span>
                         <a class="btn bg-primary"
-                           href="${pageContext.request.contextPath}/frontController?commandName=payment"><fmt:message
+                           href="${pageContext.request.contextPath}/payment"><fmt:message
                                 bundle="${i18n}" key="reserv.pay"/></a>
                     </div>
                 </div>
@@ -159,8 +159,8 @@
             var contextUrl = '${pageContext.request.contextPath}';
             $.ajax({
                 type: 'post',
-                url: contextUrl + '/frontController',
-                data: {commandName: 'setUniqueNumber', tempNumber: tempNumber}
+                url: contextUrl + '/setUniqueNumber',
+                data: {tempNumber: tempNumber}
             });
         }
     </script>

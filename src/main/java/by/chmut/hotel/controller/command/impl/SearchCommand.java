@@ -1,42 +1,55 @@
 package by.chmut.hotel.controller.command.impl;
 
 import by.chmut.hotel.bean.Room;
-import by.chmut.hotel.controller.command.Command;
 import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.ServiceFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.MAIN_PAGE;
-import static by.chmut.hotel.controller.command.impl.constant.Constants.PATH_FOR_ERROR_PAGE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+@Controller
+public class SearchCommand {
 
-public class SearchCommand implements Command {
-
-    private ServiceFactory factory = ServiceFactory.getInstance();
+    @Autowired
+    private RoomService roomService;
 
     private static final Logger logger = Logger.getLogger(SearchCommand.class);
 
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        String bedType = req.getParameter("bedtype");
-        String checkIn = req.getParameter("checkin");
-        String checkOut = req.getParameter("checkout");
+    @RequestMapping(value = "/searchR")
+    public String showRoom(HttpServletRequest req) {
+
+        List<Room> rooms = roomService.getAllRoom();
+
+        req.getSession().setAttribute("rooms", rooms);
+
+        return "/search";
+    }
+
+
+    @RequestMapping(value = "/search", method = POST)
+    public String searchRoom(HttpServletRequest req, @RequestParam(value = "bedType" ,required = false) String bedType,
+                             @RequestParam(value = "checkin",required = false) String checkIn,
+                             @RequestParam(value = "checkout",required = false) String checkOut){
+
         List<Room> rooms = new ArrayList<>();
+
+        String url = "/search";
+
         try {
             if (bedType == null || checkIn == null || checkOut == null) {
 
-                rooms = factory.getRoomService().getAllRoom();
+                rooms = roomService.getAllRoom();
 
             } else {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -46,22 +59,23 @@ public class SearchCommand implements Command {
                 req.getSession().setAttribute("checkIn", checkInDate);
                 req.getSession().setAttribute("checkOut", checkOutDate);
 
-                rooms = factory.getRoomService().getAvailableRoom(bedTypeInt,
+                rooms = roomService.getAvailableRoom(bedTypeInt,
                         checkInDate, checkOutDate);
             }
         } catch (ServiceException e) {
 
             logger.error(e);
 
-            req.getSession().setAttribute("pagePath", PATH_FOR_ERROR_PAGE);
-
             req.getSession().setAttribute("message", "main.error");
+
+            url = "/error";
 
         }
 
         req.getSession().setAttribute("rooms", rooms);
 
-        req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);
+        return url;
 
     }
+
 }

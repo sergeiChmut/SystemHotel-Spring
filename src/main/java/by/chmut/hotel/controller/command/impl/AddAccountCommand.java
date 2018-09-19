@@ -1,30 +1,31 @@
 package by.chmut.hotel.controller.command.impl;
 
-import by.chmut.hotel.controller.command.Command;
-import javax.servlet.ServletException;
+import by.chmut.hotel.controller.domain.LoginData;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.MAIN_PAGE;
+@Controller
+public class AddAccountCommand  {
 
+    @RequestMapping("/add_account")
 
-public class AddAccountCommand implements Command {
-
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public String showForm(HttpServletRequest req, Model model) {
 
         if (req.getSession().getAttribute("user") == null) {
 
-            req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);
+            LoginData loginData = new LoginData();
+
+            model.addAttribute("loginData", loginData);
 
             req.getSession().setAttribute("errorMsg", "");
 
-        } else {
-
-            String contextPath = req.getContextPath();
-
-            resp.sendRedirect(contextPath + "/frontController?commandName=reservation");
+            return "/add_account";
         }
+
+        return "/reservation";
+
     }
+
 }
