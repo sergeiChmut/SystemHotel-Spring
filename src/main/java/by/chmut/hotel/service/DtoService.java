@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface DtoService {
 
-    List<RoomDto> getRoomWithCheckInOrDepartureForThisDay(LocalDate date) throws ServiceException;
+    List<RoomDto> getRoomWithCheckInOrDepartureForThisDay(LocalDate date);
 }

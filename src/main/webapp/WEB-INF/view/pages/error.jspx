@@ -1,13 +1,12 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
-          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-          xmlns="http://www.w3.org/1999/xhtml" version="2.0">
+          xmlns="http://www.w3.org/1999/xhtml" version="2.0"
+          xmlns:spring="http://www.springframework.org/tags">
     <div class="container col-xs-12" style="background-color:#e6f7d9;">
-        <fmt:setLocale value="${sessionScope.locale}"/>
-        <fmt:setBundle basename="messages" var="i18n"/>
 
-        <c:if test="${not empty sessionScope.message}">
-            <c:set var="ermessage"><fmt:message key="${sessionScope.message}" bundle="${i18n}"/></c:set>
+        <c:set var="message" value="${sessionScope.message}"/>
+        <c:if test="${not empty message}">
+            <c:set var="ermessage"><spring:message code="${message}"/></c:set>
             <div class="alert alert-warning col-xs-6 left-arrow">
                 <strong>${ermessage}</strong>
             </div>

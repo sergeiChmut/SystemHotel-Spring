@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface Dto {
 
-    List<RoomDto> getAllRoomsWhereCheckInOrCheckOutEqualsDate(LocalDate date) throws DAOException;
+    List<RoomDto> getAllRoomsWhereCheckInOrCheckOutEqualsDate(LocalDate date);
 }

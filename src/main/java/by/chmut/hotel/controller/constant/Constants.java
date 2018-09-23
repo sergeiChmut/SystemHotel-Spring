@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl.constant;
+package by.chmut.hotel.controller.constant;
 
 public final class Constants {
 
@@ -7,5 +7,6 @@ public final class Constants {
     public static final String PATH_FOR_ERROR_PAGE = "pages/error.jspx";
     public static final String REMEMBER_ME_COOKIE = "HotelParadiseByChmut";
     public static final int COOKIE_AGE = 365*24*60*60; // year
+    public static final int MAX_CONNECTIONS = 5;
 
 }

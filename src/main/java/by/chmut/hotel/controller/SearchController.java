@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.service.RoomService;
@@ -18,15 +18,15 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-public class SearchCommand {
+public class SearchController {
 
     @Autowired
     private RoomService roomService;
 
-    private static final Logger logger = Logger.getLogger(SearchCommand.class);
+    private static final Logger logger = Logger.getLogger(SearchController.class);
 
 
-    @RequestMapping(value = "/searchR")
+    @RequestMapping(value = "/search")
     public String showRoom(HttpServletRequest req) {
 
         List<Room> rooms = roomService.getAllRoom();
@@ -37,7 +37,7 @@ public class SearchCommand {
     }
 
 
-    @RequestMapping(value = "/search", method = POST)
+    @RequestMapping(value = "/booknow", method = POST)
     public String searchRoom(HttpServletRequest req, @RequestParam(value = "bedType" ,required = false) String bedType,
                              @RequestParam(value = "checkin",required = false) String checkIn,
                              @RequestParam(value = "checkout",required = false) String checkOut){

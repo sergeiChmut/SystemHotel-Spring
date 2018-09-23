@@ -3,7 +3,9 @@ package by.chmut.hotel.bean.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,8 +13,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-
-public class RoomDto {
+@ToString
+public class RoomDto implements Serializable {
 
     private int roomNumber;
     private int bedType;

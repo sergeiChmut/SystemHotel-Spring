@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.REMEMBER_ME_COOKIE;
+import static by.chmut.hotel.controller.constant.Constants.REMEMBER_ME_COOKIE;
 
 @Controller
-public class LogoutCommand {
+public class LogoutController {
 
 
     @GetMapping(value = "/logout")

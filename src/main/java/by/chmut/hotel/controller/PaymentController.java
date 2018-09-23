@@ -1,8 +1,8 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
-import by.chmut.hotel.controller.command.validation.PaymentSender;
+import by.chmut.hotel.controller.validation.PaymentSender;
 import by.chmut.hotel.service.ReservationService;
 import by.chmut.hotel.service.ServiceException;
 import org.apache.log4j.Logger;
@@ -15,12 +15,12 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class PaymentCommand {
+public class PaymentController {
 
     @Autowired
     private ReservationService reservationService;
 
-    private static final Logger logger = Logger.getLogger(PaymentCommand.class);
+    private static final Logger logger = Logger.getLogger(PaymentController.class);
 
     @RequestMapping(value = "/payment")
     public String payment(HttpServletRequest req) {

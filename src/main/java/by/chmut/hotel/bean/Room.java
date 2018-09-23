@@ -4,23 +4,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
+@Entity
+@Table(name="Rooms")
 public class Room implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int roomNumber;
     private String type;
+    @Column(name = "bedType")
     private int bedType;
     private long price;
     private LocalDate checkIn;
     private LocalDate checkOut;
     private String description;
     private int temporaryNumber;
+    @OneToMany(mappedBy="room",
+            cascade= {CascadeType.REMOVE, CascadeType.REFRESH})
+    private List<Reservation> reservations;
 
     public Room(int roomNumber, String type, int bedType, long price, LocalDate checkIn, LocalDate checkOut, String description) {
         this.roomNumber = roomNumber;
@@ -30,6 +39,7 @@ public class Room implements Serializable {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.description = description;
+
     }
 
     @Override
@@ -43,7 +53,7 @@ public class Room implements Serializable {
         if (roomNumber != room.roomNumber ) {
             return false;
         }
-        if (bedType != room.bedType ) {
+        if (bedType != room.bedType) {
             return false;
         }
         if (price != room.price ) {

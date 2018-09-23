@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-public class DefaultCommand {
+public class DefaultController {
 
-    private static final Logger logger = Logger.getLogger(DefaultCommand.class);
+    private static final Logger logger = Logger.getLogger(DefaultController.class);
 
     @Autowired
     private RoomService roomService;

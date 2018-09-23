@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.User;
 
@@ -18,18 +18,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.COOKIE_AGE;
-import static by.chmut.hotel.controller.command.validation.Validator.isPasswordValid;
+import static by.chmut.hotel.controller.constant.Constants.COOKIE_AGE;
+import static by.chmut.hotel.controller.validation.Validator.isPasswordValid;
 
 
 @Controller
 
-public class LoginCommand {
+public class LoginController {
 
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = Logger.getLogger(LoginCommand.class);
+    private static final Logger logger = Logger.getLogger(LoginController.class);
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -82,11 +82,11 @@ public class LoginCommand {
 
     private void activateRememberMe(User user, HttpServletResponse resp) {
 
-        Cookie cookie = userService.addRememberMe(user);
-
-        cookie.setMaxAge(COOKIE_AGE);
-
-        resp.addCookie(cookie);
+//        Cookie cookie = userService.addRememberMe(user);
+//
+//        cookie.setMaxAge(COOKIE_AGE);
+//
+//        resp.addCookie(cookie);
 
     }
 }

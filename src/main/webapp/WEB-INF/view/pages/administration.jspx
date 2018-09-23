@@ -1,12 +1,11 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
-          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-          xmlns="http://www.w3.org/1999/xhtml" version="2.0">
-    <fmt:setLocale value="${sessionScope.locale}"/>
-    <fmt:setBundle basename="messages" var="i18n"/>
+          xmlns="http://www.w3.org/1999/xhtml" version="2.0"
+          xmlns:spring="http://www.springframework.org/tags">
+
     <div class="container col-xs-12" style="background-color:#e6f7d9;">
         <c:if test="${not empty sessionScope.errorAdmin}">
-            <c:set var="ermessage"><fmt:message key="${sessionScope.errorAdmin}" bundle="${i18n}"/></c:set>
+            <c:set var="ermessage"><spring:message code="errorAdmin"/></c:set>
             <div class="alert alert-warning col-xs-6 left-arrow">
                 <strong>${ermessage}</strong>
             </div>
@@ -15,11 +14,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-5 col-xs-offset-2 text-right" style="padding: 10px;">
-                    <p style="font-size: 15px"><fmt:message bundle="${i18n}" key="admin.message"/></p>
+                    <p style="font-size: 15px"><spring:message code="admin.message"/></p>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn btn-default" data-toggle="collapse" data-target="#demo"><fmt:message
-                            bundle="${i18n}" key="admin.view"/></button>
+                    <button class="btn btn-default" data-toggle="collapse" data-target="#demo"><spring:message code="admin.view"/></button>
                 </div>
             </div>
             <div id="demo" class="collapse">
@@ -28,15 +26,15 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="col-xs-1"><fmt:message bundle="${i18n}" key="admin.roomNum"/></th>
+                                <th class="col-xs-1"><spring:message code="admin.roomNum"/></th>
                                 <th class="col-xs-1"><span class="glyphicon glyphicon-bed"></span></th>
-                                <th class="col-xs-1"><fmt:message bundle="${i18n}" key="reserv.checkin"/></th>
-                                <th class="col-xs-1"><fmt:message bundle="${i18n}" key="reserv.checkout"/></th>
-                                <th class="col-xs-2"><fmt:message bundle="${i18n}" key="admin.name"/></th>
-                                <th class="col-xs-2"><fmt:message bundle="${i18n}" key="admin.lname"/></th>
-                                <th class="col-xs-2"><fmt:message bundle="${i18n}" key="admin.tel"/></th>
-                                <th class="col-xs-1"><fmt:message bundle="${i18n}" key="admin.city"/></th>
-                                <th class="col-xs-1"><fmt:message bundle="${i18n}" key="admin.price"/></th>
+                                <th class="col-xs-1"><spring:message code="reserv.checkin"/></th>
+                                <th class="col-xs-1"><spring:message code="reserv.checkout"/></th>
+                                <th class="col-xs-2"><spring:message code="admin.name"/></th>
+                                <th class="col-xs-2"><spring:message code="admin.lname"/></th>
+                                <th class="col-xs-2"><spring:message code="admin.tel"/></th>
+                                <th class="col-xs-1"><spring:message code="admin.city"/></th>
+                                <th class="col-xs-1"><spring:message code="admin.price"/></th>
                             </tr>
                             </thead>
                             <tbody>

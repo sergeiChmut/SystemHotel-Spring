@@ -2,14 +2,11 @@ package by.chmut.hotel.service;
 
 import by.chmut.hotel.bean.User;
 
-import javax.servlet.http.Cookie;
 
-public interface UserService {
+public interface UserService extends ServiceI<User>  {
 
-    User getUser(String login) throws ServiceException;
-    User getUser(Cookie cookie) throws ServiceException;
+    User getUser(String login);
     User addUser(String login, String password, String name, String lastName, String email, String phone, String country,
-                        String city, String address, String zip) throws ServiceException;
+                        String city, String address, String zip);
 
-    Cookie addRememberMe(User user) throws ServiceException;
 }

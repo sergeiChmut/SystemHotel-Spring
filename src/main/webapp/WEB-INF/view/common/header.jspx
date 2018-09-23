@@ -42,7 +42,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <li>
-                                            <a href="${pageContext.request.contextPath}/searchR">${navName}</a>
+                                            <a href="${pageContext.request.contextPath}/search">${navName}</a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>

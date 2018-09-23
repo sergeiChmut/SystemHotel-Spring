@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.validation.encoder;
+package by.chmut.hotel.controller.validation.encoder;
 
 
 import sun.misc.BASE64Encoder;

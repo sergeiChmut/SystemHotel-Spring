@@ -1,34 +1,30 @@
 package by.chmut.hotel.service.impl;
 
 import by.chmut.hotel.bean.dto.RoomDto;
-import by.chmut.hotel.dao.DAOException;
-import by.chmut.hotel.dao.Dto;
+import by.chmut.hotel.dao.impl.RoomDtoImpl;
 import by.chmut.hotel.service.DtoService;
-import by.chmut.hotel.service.ServiceException;
-import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-@Data
-public class DtoServiceImpl extends AbstractService implements DtoService {
+@Service
+@Transactional
+public class DtoServiceImpl implements DtoService {
 
-//    private DAOFactory factory = DAOFactory.getInstance();
-
-    private Dto roomDto;
+    @Autowired
+    private RoomDtoImpl roomDto;
 
     @Override
-    public List<RoomDto> getRoomWithCheckInOrDepartureForThisDay(LocalDate date) throws ServiceException {
+    public List<RoomDto> getRoomWithCheckInOrDepartureForThisDay(LocalDate date) {
 
-        List<RoomDto> result = Collections.emptyList();
+        List<RoomDto> result = roomDto.getAllRoomsWhereCheckInOrCheckOutEqualsDate(date);
 
-        try {
-            startTransaction();
-            result = roomDto.getAllRoomsWhereCheckInOrCheckOutEqualsDate(date);
-            commit();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
+        if (result == null) {
+            result = Collections.emptyList();
         }
 
         return result;

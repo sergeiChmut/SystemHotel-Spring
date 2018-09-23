@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.Reservation;
 import by.chmut.hotel.bean.Room;
@@ -9,6 +9,7 @@ import by.chmut.hotel.service.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,16 +19,16 @@ import java.util.List;
 
 @Controller
 
-public class ReservationCommand {
+public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
     @Autowired
     private RoomService roomService;
 
-    private static final Logger logger = Logger.getLogger(ReservationCommand.class);
+    private static final Logger logger = Logger.getLogger(ReservationController.class);
 
-
+    @GetMapping(value = "/reservation")
     public String makeReservation(HttpServletRequest req) {
         HttpSession session = req.getSession();
         session.removeAttribute("error");
@@ -45,7 +46,7 @@ public class ReservationCommand {
             if (roomId != null) {
                 Room room = getRoomById(req, roomId);
                 temporaryRooms.add(room);
-                reservationService.save(new Reservation(user.getId(), room.getId(), room.getCheckIn(), room.getCheckOut()));
+//                reservationService.save(new Reservation(user.getId(), room.getId(), room.getCheckIn(), room.getCheckOut()));
                 totalSum += room.getPrice();
                 session.removeAttribute("roomId");
                 session.setAttribute("tempRooms", temporaryRooms);

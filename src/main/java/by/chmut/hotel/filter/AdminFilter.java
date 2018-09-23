@@ -1,7 +1,8 @@
 package by.chmut.hotel.filter;
 
 import by.chmut.hotel.bean.User;
-import by.chmut.hotel.service.ServiceFactory;
+import by.chmut.hotel.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -11,14 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.chmut.hotel.controller.command.impl.constant.Constants.REMEMBER_ME_COOKIE;
+import static by.chmut.hotel.controller.constant.Constants.REMEMBER_ME_COOKIE;
 
 
 @WebFilter(filterName = "adminFilter", urlPatterns = "/*")
 
 public class AdminFilter implements Filter {
 
-    private ServiceFactory factory = ServiceFactory.getInstance();
+    @Autowired
+    private UserService userService;
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -59,7 +61,7 @@ public class AdminFilter implements Filter {
         User user = null;
         if (cookie != null) {
 
-            user = factory.getUserService().getUser(cookie);
+//            user = userService.getUser(cookie);
 
         }
         if (user != null) {

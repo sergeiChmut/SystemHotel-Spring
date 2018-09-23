@@ -1,8 +1,8 @@
-package by.chmut.hotel.dao;
+package by.chmut.hotel.service;
 
 import java.io.Serializable;
 
-public interface Dao<T> {
+public interface ServiceI<T> {
 
     T add(T t);
 
@@ -11,4 +11,5 @@ public interface Dao<T> {
     T get(Serializable id);
 
     void delete(Serializable id);
+
 }

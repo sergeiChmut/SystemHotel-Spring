@@ -1,7 +1,7 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.User;
-import by.chmut.hotel.controller.command.validation.encoder.Encoder;
+import by.chmut.hotel.controller.validation.encoder.Encoder;
 import by.chmut.hotel.controller.domain.LoginData;
 import by.chmut.hotel.service.ServiceException;
 import by.chmut.hotel.service.UserService;
@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
-public class CreateUserCommand {
+public class CreateUserController {
 
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = Logger.getLogger(LoginCommand.class);
+    private static final Logger logger = Logger.getLogger(LoginController.class);
 
 
     @RequestMapping(value = "/create_user", method = RequestMethod.POST)

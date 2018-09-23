@@ -1,54 +1,30 @@
 package by.chmut.hotel.dao.impl;
 
 import by.chmut.hotel.bean.dto.RoomDto;
-import by.chmut.hotel.dao.AbstractDao;
-import by.chmut.hotel.dao.DAOException;
 import by.chmut.hotel.dao.Dto;
+import lombok.Getter;
+import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDtoImpl extends AbstractDao implements Dto {
+@Repository
+public class RoomDtoImpl implements Dto {
 
-    String selectData = "SELECT roomNumber,bedType,checkIn,checkOut, name,lastname,telephone,city,price FROM " +
-            "Reservation JOIN Users U on user_id = U.id JOIN Rooms RememberMeTokenImpl on room_id = RememberMeTokenImpl.id JOIN Contacts C on U.contact_id = C.id " +
-            "WHERE  checkIn=? OR checkOut=?";
+    @PersistenceContext
+    @Getter
+    private EntityManager em;
 
-    public List<RoomDto> getAllRoomsWhereCheckInOrCheckOutEqualsDate(LocalDate date) throws DAOException {
-        List<RoomDto> list = new ArrayList<>();
-        try {
-            PreparedStatement psSearchRoom = prepareStatement(selectData);
-            psSearchRoom.setDate(1, java.sql.Date.valueOf(date));
-            psSearchRoom.setDate(2, java.sql.Date.valueOf(date));
-            ResultSet rs = psSearchRoom.executeQuery();
-            while (rs.next()) {
-                list.add(setDtoFromResultSet(rs));
-            }
-            close(rs);
-        } catch (SQLException e) {
-            throw new DAOException("Error with get Rooms by check in or check out equals date",e);
-        }
-        return list;
-    }
-    private RoomDto setDtoFromResultSet(ResultSet rs) throws DAOException {
-        RoomDto result = new RoomDto();
-        try {
-            result.setRoomNumber(rs.getInt(1));
-            result.setBedType(rs.getInt(2));
-            result.setCheckIn(rs.getDate(3).toLocalDate());
-            result.setCheckOut(rs.getDate(4).toLocalDate());
-            result.setName(rs.getString(5));
-            result.setLastname(rs.getString(6));
-            result.setTelephone(rs.getString(7));
-            result.setCity(rs.getString(8));
-            result.setPrice(rs.getDouble(9));
-        } catch (SQLException e) {
-            throw new DAOException("Error with set from ResultSet", e);
-        }
+
+    @Override
+    public List<RoomDto> getAllRoomsWhereCheckInOrCheckOutEqualsDate(LocalDate date){
+        List<RoomDto> result = em.createQuery("select r.roomNumber, r.bedType, res.checkIn, res.checkOut, u.name," +
+                " u.lastname, c.telephone, c.city, r.price from Reservation res JOIN User u on res.user.id = u.id " +
+                "JOIN Room r on res.room.id = r.id JOIN Contacts c on u.contacts.id = c.id " +
+                "where res.checkIn = :date or res.checkOut = :date").setParameter("date", date)
+                .getResultList();
         return result;
     }
 }

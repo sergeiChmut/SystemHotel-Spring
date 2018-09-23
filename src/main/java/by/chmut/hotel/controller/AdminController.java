@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.command.impl;
+package by.chmut.hotel.controller;
 
 import by.chmut.hotel.service.DtoService;
 import by.chmut.hotel.service.ServiceException;
@@ -12,12 +12,12 @@ import java.time.LocalDate;
 
 
 @Controller
-public class AdminCommand {
+public class AdminController {
 
     @Autowired
     private DtoService dtoService;
 
-    private static final Logger logger = Logger.getLogger(LoginCommand.class);
+    private static final Logger logger = Logger.getLogger(LoginController.class);
 
     @RequestMapping(value = "/administration")
 

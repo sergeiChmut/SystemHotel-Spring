@@ -6,9 +6,6 @@ import javax.servlet.http.Cookie;
 
 public interface UserDao extends Dao<User> {
 
-    User getUser(String login) throws DAOException;
+    User getUser(String login);
 
-    User getUser(Cookie cookie) throws DAOException;
-
-    Cookie addToken(User user) throws DAOException;
 }
