@@ -5,17 +5,11 @@
           xmlns:spring="http://www.springframework.org/tags">
 
     <div class="container" style="background-color:#e6f7d9;">
-            <c:set var="errorMsg" value="${sessionScope.errorMsg}"/>
-    <c:if test="${not empty errorMsg}">
-        <c:set var="ermessage"><spring:message code="${errorMsq}"/></c:set>
-        <div class="alert alert-warning col-xs-6 left-arrow">
-             <strong>${ermessage}</strong>
-        </div>
-    </c:if>
+
     <fieldset id="contact" class="container">
         <h2><spring:message code="contact.registration"/></h2>
         <p><spring:message code="contact.info"/></p>
-        <form:form class="form-horizontal" action="${pageContext.request.contextPath}/create_user" method="post">
+        <form:form cssClass="form-horizontal" action="${pageContext.request.contextPath}/create_user" modelAttribute="loginData" method="post">
             <![CDATA[
             <legend>
             ]]>
@@ -27,55 +21,55 @@
                 <label class="control-label col-xs-3" for="lastName"><spring:message code="contact.lastname"/></label>
                 <div class="col-xs-6">
                     <c:set var="inputlname"><spring:message code="input.lname"/></c:set>
-                    <form:input type="text" class="form-control" id="lastName" placeholder="${inputlname}" name="lastName" required=""  path="lastName"/>
+                    <form:input  cssClass="form-control" id="lastName" placeholder="${inputlname}" name="lastName" required=""  path="lastName"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="firstName"><spring:message code="contact.name"/></label>
                 <div class="col-xs-6">
                     <c:set var="inputname"><spring:message code="input.fname"/></c:set>
-                    <form:input type="text" class="form-control" id="firstName" placeholder="${inputname}"  name="firstName" required="" path="firstName"/>
+                    <form:input cssClass="form-control" id="firstName" placeholder="${inputname}"  name="firstName" required="" path="firstName"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="inputEmail"><spring:message code="contact.email"/></label>
                 <div class="col-xs-6">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" required=""/>
+                    <form:input cssClass="form-control" type="email" id="inputEmail" placeholder="Email" name="email" required="" path="email"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="phoneNumber"><spring:message code="contact.phone"/></label>
                 <div class="col-xs-6">
                     <c:set var="phone"><spring:message code="input.phone"/></c:set>
-                    <input type="tel" class="form-control" id="phoneNumber" placeholder="${phone}" name="phone" required=""/>
+                    <form:input cssClass="form-control" id="phoneNumber" placeholder="${phone}" name="phone" required="" path="phone"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="country"><spring:message code="contact.country"/></label>
                 <div class="col-xs-6">
                     <c:set var="country"><spring:message code="input.country"/></c:set>
-                    <input type="text" class="form-control" id="country" placeholder="${country}" name="country" required=""/>
+                    <form:input cssClass="form-control" id="country" placeholder="${country}" name="country" required="" path="country"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="city"><spring:message code="contact.city"/></label>
                 <div class="col-xs-6">
                     <c:set var="city"><spring:message code="input.city"/></c:set>
-                    <input type="text" class="form-control" id="city" placeholder="${city}" name="city" required=""/>
+                    <form:input cssClass="form-control" id="city" placeholder="${city}" name="city" required="" path="city"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="address"><spring:message code="contact.address"/></label>
                 <div class="col-xs-6">
                     <c:set var="address"><spring:message code="input.address"/></c:set>
-                    <input type="text" class="form-control" id="address" placeholder="${address}" name="address" required=""/>
+                    <form:input cssClass="form-control" id="address" placeholder="${address}" name="address" required="" path="address"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="zip"><spring:message code="contact.zip"/></label>
                 <div class="col-xs-6">
                     <c:set var="zip"><spring:message code="input.zip"/></c:set>
-                    <input type="text" class="form-control" id="zip" placeholder="${zip}" name="zip" />
+                    <form:input cssClass="form-control" id="zip" placeholder="${zip}" name="zip" path="zip" />
                 </div>
             </div>
         <!--</form>-->
@@ -94,21 +88,21 @@
                 <label class="control-label col-xs-3" for="login"><spring:message code="contact.username"/></label>
                 <div class="col-xs-6">
                     <c:set var="elogin"><spring:message code="input.login"/></c:set>
-                    <input type="text" class="form-control" id="login" placeholder="${elogin}" name="login" required=""/>
+                    <form:input cssClass="form-control" id="login" placeholder="${elogin}" name="login" required="" path="login"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="inputPassword"><spring:message code="contact.pass"/></label>
                 <div class="col-xs-6">
                     <c:set var="pass"><spring:message code="input.pass"/></c:set>
-                    <input type="password" class="form-control" id="inputPassword" placeholder="${pass}" name="password" required=""/>
+                    <form:input cssClass="form-control" type="password" id="inputPassword" placeholder="${pass}" name="password" required="" path="password"/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-xs-3" for="confirmPassword"><spring:message code="contact.conpass"/></label>
                 <div class="col-xs-6">
                     <c:set var="reppass"><spring:message code="input.reppass"/></c:set>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="${reppass}" required=""/>
+                    <form:input cssClass="form-control" type="password" id="confirmPassword" placeholder="${reppass}" required="" path="password"/>
                 </div>
             </div>
             <div class="form-group">

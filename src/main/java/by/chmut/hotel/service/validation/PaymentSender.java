@@ -1,4 +1,4 @@
-package by.chmut.hotel.controller.validation;
+package by.chmut.hotel.service.validation;
 
 public class PaymentSender {
 

@@ -6,7 +6,7 @@
     <div class="container col-xs-12" style="background-color:#e6f7d9;height: 1000px;">
 
     <c:choose>
-        <c:when test="${not empty param.success}">
+        <c:when test="${not empty success}">
             <h2><strong><spring:message code="payment.success"/></strong>></h2>
         </c:when>
         <c:otherwise>

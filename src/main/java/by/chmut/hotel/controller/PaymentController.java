@@ -2,15 +2,18 @@ package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
-import by.chmut.hotel.controller.validation.PaymentSender;
-import by.chmut.hotel.service.ReservationService;
+import by.chmut.hotel.service.validation.PaymentSender;
 import by.chmut.hotel.service.ServiceException;
+import by.chmut.hotel.service.impl.ReservationServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -18,12 +21,12 @@ import java.util.List;
 public class PaymentController {
 
     @Autowired
-    private ReservationService reservationService;
+    private ReservationServiceImpl reservationService;
 
     private static final Logger logger = Logger.getLogger(PaymentController.class);
 
     @RequestMapping(value = "/payment")
-    public String payment(HttpServletRequest req) {
+    public String payment(HttpServletRequest req, Model model) {
 
         List<Room> temporaryRooms = (List<Room>) req.getSession().getAttribute("tempRooms");
 
@@ -33,18 +36,17 @@ public class PaymentController {
 
             removeAttributes(req.getSession());
 
-            return "/payment?success=ok";
+            model.addAttribute("success", "ok");
 
-        } else {
-
-            return "/payment";
         }
+
+        return "/payment";
     }
 
 
     private boolean makePaymentWithParams(HttpServletRequest req) {
 
-        if ( req.getSession().getAttribute("totalSum") != null ){
+        if (req.getSession().getAttribute("totalSum") != null) {
 
             PaymentSender paymentSender = new PaymentSender(req.getParameter("numCard"), req.getParameter("nameCard"),
                     req.getParameter("cvc2"));

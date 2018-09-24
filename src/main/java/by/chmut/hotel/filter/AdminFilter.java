@@ -61,7 +61,7 @@ public class AdminFilter implements Filter {
         User user = null;
         if (cookie != null) {
 
-//            user = userService.getUser(cookie);
+//            user = userService.getUserAndValidate(cookie);
 
         }
         if (user != null) {

@@ -19,9 +19,8 @@ public class AddAccountController {
 
             model.addAttribute("loginData", loginData);
 
-            req.getSession().setAttribute("errorMsg", "");
-
             return "/add_account";
+
         }
 
         return "/reservation";

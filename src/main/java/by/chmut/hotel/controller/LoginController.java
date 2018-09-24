@@ -4,7 +4,7 @@ import by.chmut.hotel.bean.User;
 
 import by.chmut.hotel.service.ServiceException;
 
-import by.chmut.hotel.service.UserService;
+import by.chmut.hotel.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,22 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import static by.chmut.hotel.controller.constant.Constants.COOKIE_AGE;
-import static by.chmut.hotel.controller.validation.Validator.isPasswordValid;
-
 
 @Controller
 
 public class LoginController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     private static final Logger logger = Logger.getLogger(LoginController.class);
 
@@ -47,19 +41,21 @@ public class LoginController {
 
         HttpSession session = req.getSession();
 
-        String errorMessage = "errorLog";
+        String message = "errorLog";
 
-        String url = "/add_account";
+        String url = "/error";
+
         try {
-            user = userService.getUser(login);
 
-            if (isPasswordValid(user, password)) {
+            user = userService.getUserAndValidate(login, password);
+
+            if (user != null) {
 
                 session.setAttribute("user", user);
 
-                errorMessage = "";
+                message = "";
 
-                url = req.getHeader("referer");//+req.getSession().getAttribute("prevPage");
+                url = req.getHeader("referer");
 
                 if (remember != null) {
 
@@ -74,7 +70,7 @@ public class LoginController {
 
         }
 
-        session.setAttribute("errorMsg", errorMessage);
+        session.setAttribute("message", message);
 
         return "redirect:"+url;
 

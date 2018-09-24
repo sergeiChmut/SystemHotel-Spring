@@ -4,9 +4,11 @@ import by.chmut.hotel.dao.UserDao;
 import by.chmut.hotel.bean.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDaoImpl extends BaseDao<User> implements UserDao {
-    
+
     public UserDaoImpl() {
         super();
         type = User.class;
@@ -14,8 +16,11 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public User getUser(String login) {
-        return (User) getEm().createQuery("from User WHERE login = :login")
-                .setParameter("login", login).getSingleResult();
+
+        List<User> results = getEm().createQuery("from User WHERE login = :login")
+                .setParameter("login", login).getResultList();
+
+        return results.isEmpty() ? null : results.get(0);
     }
 
 }
