@@ -1,7 +1,8 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core"
-          version="2.0" xmlns:tiles="http://tiles.apache.org/tags-tiles"
-          xmlns:spring="http://www.springframework.org/tags">
+          xmlns:tiles="http://tiles.apache.org/tags-tiles"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
 
     <c:set var="path">
         <tiles:insertAttribute name="title" ignore="true"/>
@@ -57,8 +58,8 @@
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
-                                <c:set var="condition" value='${"admin".equalsIgnoreCase(sessionScope.admin)}'/>
-                                <c:if test="${condition}">
+
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
                                     <c:set var="navName"><spring:message code="title.administration"/></c:set>
                                     <c:choose>
                                         <c:when test="${title eq 'Administration'}">
@@ -70,7 +71,24 @@
                                             </li>
                                         </c:otherwise>
                                     </c:choose>
-                                </c:if>
+                                </sec:authorize>
+
+                                <!--old-->
+                                <!--<c:set var="condition" value='${"admin".equalsIgnoreCase(sessionScope.admin)}'/>-->
+                                <!--<c:if test="${condition}">-->
+                                    <!--<c:set var="navName"><spring:message code="title.administration"/></c:set>-->
+                                    <!--<c:choose>-->
+                                        <!--<c:when test="${title eq 'Administration'}">-->
+                                            <!--<li class="active"><a href="#">${navName}</a></li>-->
+                                        <!--</c:when>-->
+                                        <!--<c:otherwise>-->
+                                            <!--<li>-->
+                                                <!--<a href="${pageContext.request.contextPath}/administration">${navName}</a>-->
+                                            <!--</li>-->
+                                        <!--</c:otherwise>-->
+                                    <!--</c:choose>-->
+                                <!--</c:if>-->
+            <!--old-->
                             </ul>
                             <c:url var="fpath" value="${path}?"></c:url>
                             <a id="navbrand" class="navbar-brand col-xs-3" href="#">Hotel Paradise</a>
@@ -125,13 +143,11 @@
             </div>
         </nav>
 
-        <!--  Modal  -->
+    <!--  Modal  -->
         <div id="id01" class="modal">
-
             <form class="modal-content animate" action="${pageContext.request.contextPath}/login"
                   method="post">
-                <!--<fmt:setLocale value="${sessionScope.locale}"/>-->
-                <!--<fmt:setBundle basename="messages" var="i18n"/>-->
+
                 <div class="container">
                     <label for="uname"><spring:message code="login.login"/></label>
                     <input type="text" placeholder="Enter Username" name="login" required=""/>
@@ -141,7 +157,7 @@
 
                     <button id="btmodin" type="submit"><spring:message code="login.submit"/></button>
                     <label>
-                        <input type="checkbox" name="remember"/> <spring:message code="login.remember"/>
+                        <input type="checkbox" name="remember"/><spring:message code="login.remember"/>
                     </label>
                 </div>
 
@@ -156,6 +172,11 @@
             </form>
         </div>
     <!--</header>-->
+    <script>
+        if (document.location.href.indexOf('showModal') != -1) {
+            document.getElementById('id01').style.display='block';
+        }
 
-
+    </script>
 </jsp:root>
+

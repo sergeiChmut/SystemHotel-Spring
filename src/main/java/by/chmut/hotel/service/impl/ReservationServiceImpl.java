@@ -3,7 +3,7 @@ package by.chmut.hotel.service.impl;
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
 import by.chmut.hotel.bean.Reservation;
-import by.chmut.hotel.dao.impl.ReservationDaoImpl;
+import by.chmut.hotel.dao.ReservationDao;
 import by.chmut.hotel.service.BaseService;
 import by.chmut.hotel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ReservationServiceImpl extends BaseService<Reservation> implements ReservationService {
 
     @Autowired
-    private ReservationDaoImpl reservationDao;
+    private ReservationDao reservationDao;
 
 
     @Override

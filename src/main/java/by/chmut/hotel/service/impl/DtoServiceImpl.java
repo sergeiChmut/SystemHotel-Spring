@@ -1,7 +1,7 @@
 package by.chmut.hotel.service.impl;
 
 import by.chmut.hotel.bean.dto.RoomDto;
-import by.chmut.hotel.dao.impl.RoomDtoImpl;
+import by.chmut.hotel.dao.Dto;
 import by.chmut.hotel.service.DtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 public class DtoServiceImpl implements DtoService {
 
     @Autowired
-    private RoomDtoImpl roomDto;
+    private Dto roomDto;
 
     @Override
     public List<RoomDto> getRoomWithCheckInOrDepartureForThisDay(LocalDate date) {

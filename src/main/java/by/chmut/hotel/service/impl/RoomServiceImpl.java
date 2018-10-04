@@ -1,7 +1,7 @@
 package by.chmut.hotel.service.impl;
 
 import by.chmut.hotel.bean.Room;
-import by.chmut.hotel.dao.impl.RoomDaoImpl;
+import by.chmut.hotel.dao.RoomDao;
 import by.chmut.hotel.service.BaseService;
 import by.chmut.hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 public class RoomServiceImpl  extends BaseService<Room> implements RoomService {
 
     @Autowired
-    private RoomDaoImpl roomDao;
+    private RoomDao roomDao;
 
     @Override
     public List<Room> getAllRoom() {

@@ -1,13 +1,10 @@
 package by.chmut.hotel.controller;
 
-import by.chmut.hotel.bean.Reservation;
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
 import by.chmut.hotel.service.ReservationService;
 import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.impl.ReservationServiceImpl;
-import by.chmut.hotel.service.impl.RoomServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +21,9 @@ import java.util.List;
 public class ReservationController {
 
     @Autowired
-    private ReservationServiceImpl reservationService;
+    private ReservationService reservationService;
     @Autowired
-    private RoomServiceImpl roomService;
+    private RoomService roomService;
 
     private static final Logger logger = Logger.getLogger(ReservationController.class);
 

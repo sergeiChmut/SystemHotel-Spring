@@ -2,7 +2,6 @@ package by.chmut.hotel.controller;
 
 import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.impl.RoomServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,7 @@ public class DefaultController {
     private static final Logger logger = Logger.getLogger(DefaultController.class);
 
     @Autowired
-    private RoomServiceImpl roomService;
+    private RoomService roomService;
 
     @GetMapping(value = "/home")
 

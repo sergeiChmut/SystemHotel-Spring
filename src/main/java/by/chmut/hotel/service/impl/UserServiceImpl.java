@@ -3,8 +3,8 @@ package by.chmut.hotel.service.impl;
 import by.chmut.hotel.bean.Contacts;
 import by.chmut.hotel.bean.User;
 import by.chmut.hotel.controller.domain.LoginData;
-import by.chmut.hotel.dao.impl.ContactsDaoImpl;
-import by.chmut.hotel.dao.impl.UserDaoImpl;
+import by.chmut.hotel.dao.ContactsDao;
+import by.chmut.hotel.dao.UserDao;
 import by.chmut.hotel.service.BaseService;
 import by.chmut.hotel.service.ServiceException;
 import by.chmut.hotel.service.UserService;
@@ -22,9 +22,9 @@ import static by.chmut.hotel.service.validation.Validator.isPasswordValid;
 public class UserServiceImpl  extends BaseService<User> implements UserService {
 
     @Autowired
-    private UserDaoImpl userDao;
+    private UserDao userDao;
     @Autowired
-    private ContactsDaoImpl contactsDao;
+    private ContactsDao contactsDao;
 
     @Override
     public User getUserAndValidate(String login, String password) {
@@ -38,6 +38,7 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
         return null;
     }
 
+    @Override
     public User newUser(LoginData loginData) {
 
         User user = userDao.getUser(loginData.getLogin());

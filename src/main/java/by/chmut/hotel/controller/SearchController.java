@@ -3,9 +3,9 @@ package by.chmut.hotel.controller;
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.impl.RoomServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +22,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class SearchController {
 
     @Autowired
-    private RoomServiceImpl roomService;
+    private RoomService roomService;
 
     private static final Logger logger = Logger.getLogger(SearchController.class);
 
@@ -37,7 +37,7 @@ public class SearchController {
         return "/search";
     }
 
-
+    @PreAuthorize( "isAuthenticated ()")
     @RequestMapping(value = "/booknow")
     public String searchRoom(HttpServletRequest req, @RequestParam(value = "bedType" ,required = false) String bedType,
                              @RequestParam(value = "checkin",required = false) String checkIn,

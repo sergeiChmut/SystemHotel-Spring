@@ -2,7 +2,6 @@ package by.chmut.hotel.controller;
 
 import by.chmut.hotel.service.DtoService;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.impl.DtoServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 public class AdminController {
 
     @Autowired
-    private DtoServiceImpl dtoService;
+    private DtoService dtoService;
 
     private static final Logger logger = Logger.getLogger(LoginController.class);
 

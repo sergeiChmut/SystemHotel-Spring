@@ -3,7 +3,7 @@ package by.chmut.hotel.controller;
 import by.chmut.hotel.bean.User;
 import by.chmut.hotel.controller.domain.LoginData;
 import by.chmut.hotel.service.ServiceException;
-import by.chmut.hotel.service.impl.UserServiceImpl;
+import by.chmut.hotel.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import static by.chmut.hotel.controller.constant.Constants.DUPLICATE_MESSAGE;
 public class CreateUserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     private static final Logger logger = Logger.getLogger(CreateUserController.class);
 
