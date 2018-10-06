@@ -2,8 +2,6 @@ package by.chmut.hotel.controller;
 
 import by.chmut.hotel.bean.User;
 
-import by.chmut.hotel.service.ServiceException;
-
 import by.chmut.hotel.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,48 +33,48 @@ public class LoginController {
     public String login(HttpServletRequest req, HttpServletResponse resp,
                         @RequestParam("login") String login, @RequestParam("password") String password,
                         @RequestParam(value = "remember", required = false) String remember) {
-
-        if (login == null || password == null) {
-
-            return "redirect:/home";
-        }
-
-        User user;
-
-        HttpSession session = req.getSession();
-
-        String message = "errorLog";
-
-        String url = "/error";
-
-        try {
-
-            user = userService.getUserAndValidate(login, password);
-
-            if (user != null) {
-
-                session.setAttribute("user", user);
-
-                message = "";
-
-                url = req.getHeader("referer");
-
-                if (remember != null) {
-
-                    activateRememberMe(user, resp);
-
-                }
-
-            }
-        } catch (ServiceException e) {
-
-            logger.error(e);
-
-        }
-
-        session.setAttribute("message", message);
-
-        return "redirect:" + url;
+    return "redirect:" + req.getHeader("referer");
+//        if (login == null || password == null) {
+//
+//            return "redirect:/home";
+//        }
+//
+//        User user;
+//
+//        HttpSession session = req.getSession();
+//
+//        String message = "errorLog";
+//
+//        String url = "/error";
+//
+//        try {
+//
+//            user = userService.getUserAndValidate(login, password);
+//
+//            if (user != null) {
+//
+//                session.setAttribute("user", user);
+//
+//                message = "";
+//
+//                url = req.getHeader("referer");
+//
+//                if (remember != null) {
+//
+//                    activateRememberMe(user, resp);
+//
+//                }
+//
+//            }
+//        } catch (ServiceException e) {
+//
+//            logger.error(e);
+//
+//        }
+//
+//        session.setAttribute("message", message);
+//
+//        return "redirect:" + url;
 
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@WebListener
+
 public class AttributeListener  implements HttpSessionAttributeListener {
     private static final long START_TIME_FOR_WARNING = 1800000; // 30 min - warning - pay for order
     private static final long START_TIME_FOR_REMOVE_ROOMS = 2100000; // 5 min - cancel order unlock room

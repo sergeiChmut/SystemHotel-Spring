@@ -8,5 +8,7 @@ public interface UserService extends ServiceI<User>  {
 
     User getUserAndValidate(String login, String password);
 
+    User getUser(String login);
+
     User newUser(LoginData loginData);
 }

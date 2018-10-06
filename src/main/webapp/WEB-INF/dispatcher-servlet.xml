@@ -14,11 +14,11 @@
 
 	<mvc:annotation-driven/>
 
-	<security:global-method-security pre-post-annotations="enabled"/>
+	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
 
 	<context:component-scan base-package="by.chmut.hotel" />
 
-	<import resource="classpath*:beans-dao-service.xml"/>
+	<import resource="beans-dao-service.xml"/>
 
     <mvc:default-servlet-handler/>
 

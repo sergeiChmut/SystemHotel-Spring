@@ -8,8 +8,8 @@ import by.chmut.hotel.dao.UserDao;
 import by.chmut.hotel.service.BaseService;
 import by.chmut.hotel.service.ServiceException;
 import by.chmut.hotel.service.UserService;
-import by.chmut.hotel.service.validation.encoder.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +25,8 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
     private UserDao userDao;
     @Autowired
     private ContactsDao contactsDao;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public User getUserAndValidate(String login, String password) {
@@ -36,6 +38,14 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public User getUser(String login) {
+
+        User user = userDao.getUser(login);
+
+        return user;
     }
 
     @Override
@@ -60,10 +70,10 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
                 contacts = contactsDao.add(contacts);
                 user = new User();
                 user.setLogin(loginData.getLogin());
-                user.setPassword(Encoder.encode(loginData.getPassword()));
+                user.setPassword(passwordEncoder.encode(loginData.getPassword()));
                 user.setName(loginData.getFirstName());
                 user.setLastName(loginData.getLastName());
-                user.setRole(ROLE_USER);
+                user.setRole("ROLE_USER");
                 user = userDao.add(user);
                 user.setContacts(contacts);
                 return user;

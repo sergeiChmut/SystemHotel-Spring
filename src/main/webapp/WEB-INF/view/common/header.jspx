@@ -145,20 +145,22 @@
 
     <!--  Modal  -->
         <div id="id01" class="modal">
-            <form class="modal-content animate" action="${pageContext.request.contextPath}/login"
-                  method="post">
+            <!--<spring:url value="/j_spring_security_check" var="loginUrl" />-->
+            <form class="modal-content animate" action="login" method="post">
 
                 <div class="container">
-                    <label for="uname"><spring:message code="login.login"/></label>
-                    <input type="text" placeholder="Enter Username" name="login" required=""/>
+                    <label for="username"><spring:message code="login.login"/></label>
+                    <input type="text" placeholder="Enter Username" name="username" required=""/>
 
-                    <label for="psw"><b><spring:message code="login.password"/></b></label>
+                    <label for="password"><b><spring:message code="login.password"/></b></label>
                     <input type="password" placeholder="Enter Password" name="password" required=""></input>
 
                     <button id="btmodin" type="submit"><spring:message code="login.submit"/></button>
                     <label>
                         <input type="checkbox" name="remember"/><spring:message code="login.remember"/>
                     </label>
+                    <input type="hidden" name="${_csrf.parameterName}"
+                           value="${_csrf.token}" />
                 </div>
 
                 <div class="container" style="background-color:#f1f1f1">

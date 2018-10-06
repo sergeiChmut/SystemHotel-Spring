@@ -16,27 +16,28 @@
         <form-login
                 login-page="/home?showModal"
                 default-target-url="/search"
-                authentication-failure-url="/error"
+                authentication-failure-url="/loginfail"
                 username-parameter="username"
                 password-parameter="password"/>
-        <logout logout-success-url="/home?logout" />
+        <logout logout-success-url="/home?logout" delete-cookies="JSESSIONID"/>
         <!--enable csrf protection -->
         <csrf/>
     </http>
 
 
     <authentication-manager>
-
-        <authentication-provider>
-
-            <user-service>
-                <user name="Serge" password="1" authorities="ROLE_USER" />
-                <user name="admin" password="1234" authorities="ROLE_ADMIN" />
-            </user-service>
-
+        <authentication-provider user-service-ref="customUserDetailsService">
+            <password-encoder ref="encoder"/>
         </authentication-provider>
-
     </authentication-manager>
 
+    <!--<b:bean id="auth" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
+        <!--<b:property name="userDetailsService" ref="customUserDetailsService"/>-->
+        <!--<b:property name="passwordEncoder" ref="encoder"/>-->
+    <!--</b:bean>-->
+
+    <b:bean id="customUserDetailsService" class="by.chmut.hotel.service.CustomUserDetailsService"/>
+
+    <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 </b:beans>

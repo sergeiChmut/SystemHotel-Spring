@@ -2,7 +2,7 @@ CREATE DATABASE HotelSystem2  CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci
 USE HotelSystem2;
 CREATE TABLE Contacts(id INT PRIMARY KEY AUTO_INCREMENT, email CHAR(20), telephone CHAR(20), country CHAR(20),
                       city CHAR(20), address CHAR(120), zip CHAR (10));
-CREATE TABLE Users(id INT PRIMARY KEY AUTO_INCREMENT, login CHAR(20), password CHAR(30), name CHAR(20),lastname CHAR(20),
+CREATE TABLE Users(id INT PRIMARY KEY AUTO_INCREMENT, login CHAR(20), password CHAR(60), name CHAR(20),lastname CHAR(20),
                    role CHAR (15),contact_id INT, FOREIGN KEY (contact_id) REFERENCES Contacts(id) ON DELETE  CASCADE  ON UPDATE CASCADE);
 CREATE TABLE Rooms(id INT PRIMARY KEY AUTO_INCREMENT, roomNumber INT,type CHAR(15),bedType INT,
                    price INT, description TEXT);
@@ -12,16 +12,16 @@ CREATE TABLE Reservation (id INT PRIMARY KEY AUTO_INCREMENT, user_id INT, room_i
 CREATE TABLE persistent_logins (username VARCHAR(64) NOT NULL ,series VARCHAR(64) NOT NULL PRIMARY KEY,
 token VARCHAR(64) NOT NULL, last_used TIMESTAMP NOT NULL);
 
-INSERT INTO Users (login, password , name , lastname, role) VALUES ("admin", "tZxnvxlqR1gZHkL3ZnDOug==","Valeriy", "Manager", "admin");
+INSERT INTO Users (login, password , name , lastname, role) VALUES ("admin", "tZxnvxlqR1gZHkL3ZnDOug==","Valeriy", "Manager", "ROLE_ADMIN");
 INSERT INTO Contacts(email, telephone, country, city, address, zip) VALUES ("cl@tu.by","37529424454","Belarus","Minsk","some adr","220000");
 INSERT INTO Contacts(email, telephone, country, city, address, zip) VALUES ("d@tut.by","37533454","Russia","Smolensk","some adr","220000");
 INSERT INTO Contacts(email, telephone, country, city, address, zip) VALUES ("rt@tut.by","05424454","Belarus","Vitebsk","some adr","220000");
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user1", "gdyb21LQTcIANtvYMT7QVQ==","Sergei", "Leshko", "user",1);
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user2", "gdyb21LQTcIANtvYMT7QVQ==","Anya", "Leshko", "user",1);
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user3", "gdyb21LQTcIANtvYMT7QVQ==","Sasha", "Leshko", "user",1);
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user4", "gdyb21LQTcIANtvYMT7QVQ==","Vanya", "Puko", "user",2);
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user5", "gdyb21LQTcIANtvYMT7QVQ==","Sveta", "Puko", "user",2);
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user6", "gdyb21LQTcIANtvYMT7QVQ==","Jenya", "Derevyanko", "user",3);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user1", "gdyb21LQTcIANtvYMT7QVQ==","Sergei", "Leshko", "ROLE_USER",1);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user2", "gdyb21LQTcIANtvYMT7QVQ==","Anya", "Leshko", "ROLE_USER",1);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user3", "gdyb21LQTcIANtvYMT7QVQ==","Sasha", "Leshko", "ROLE_USER",1);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user4", "gdyb21LQTcIANtvYMT7QVQ==","Vanya", "Puko", "ROLE_USER",2);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user5", "gdyb21LQTcIANtvYMT7QVQ==","Sveta", "Puko", "ROLE_USER",2);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user6", "gdyb21LQTcIANtvYMT7QVQ==","Jenya", "Derevyanko", "ROLE_USER",3);
 INSERT INTO Rooms(roomNumber, type, bedType, price, description)
 VALUES (1,'Супер Люкс',3,1289,
         'Приятный и уютный номер распологается на втором этаже с видом во двор.');
