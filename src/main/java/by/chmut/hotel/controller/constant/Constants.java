@@ -8,6 +8,7 @@ public final class Constants {
     public static final String RESERVATION = "/reservation";
     public static final String PAYMENT = "/payment";
     public static final String ERROR = "/error";
+    public static final String ADMIN_PAGE = "/administration";
 
     public static final String DUPLICATE_MESSAGE = "Duplicate user";
     public static final String LOGIN_FAILED_MESSAGE = "Login failed detected";
@@ -23,6 +24,7 @@ public final class Constants {
     public static final String PAID_ROOMS= "paidRooms";
     public static final String CHECKIN= "checkIn";
     public static final String CHECKOUT= "checkOut";
+    public static final String LIST_OF_CLIENTS_FOR_TODAY= "client";
 
     public static final int UNPAID = 0;
     public static final int PAID = 1;
@@ -34,6 +36,7 @@ public final class Constants {
     public static final String KEY_SEARCH_PAGE_ERROR = "main.error";
     public static final String KEY_RESERVATION_EMPTY_LIST = "reserv.emptyList";
     public static final String KEY_RESERVATION_PAGE_ERROR = "errorReservation";
+    public static final String KEY_ADMIN_PAGE_ERROR = "errorAdmin";
     public static final String SUCCESSFULLY_COMPLETED = "true";
 
 }

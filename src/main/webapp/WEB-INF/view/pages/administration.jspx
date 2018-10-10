@@ -4,10 +4,9 @@
           xmlns:spring="http://www.springframework.org/tags">
 
     <div class="container col-xs-12" style="background-color:#e6f7d9;">
-        <c:if test="${not empty sessionScope.errorAdmin}">
-            <c:set var="ermessage"><spring:message code="errorAdmin"/></c:set>
+        <c:if test="${not empty message}">
             <div class="alert alert-warning col-xs-6 left-arrow">
-                <strong>${ermessage}</strong>
+                <strong>${message}</strong>
             </div>
         </c:if>
 

@@ -3,14 +3,6 @@
           xmlns="http://www.w3.org/1999/xhtml" version="2.0" xmlns:spring="http://www.springframework.org/tags">
     <div class="container col-xs-12" style="background-color:#e6f7d9;">
 
-        <c:set var="errorS" value="${sessionScope.error}"/>
-        <c:if test="${not empty errorS}">
-            <c:set var="ermessage"><spring:message code="${errorS}"/></c:set>
-            <div class="alert alert-warning col-xs-6 left-arrow">
-                <strong>${ermessage}</strong>
-            </div>
-        </c:if>
-
         <!-- if user has paid reservation-->
         <c:if test="${not empty sessionScope.paidRooms}">
 

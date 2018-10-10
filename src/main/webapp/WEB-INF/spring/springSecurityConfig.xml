@@ -20,21 +20,26 @@
                 default-target-url="/search"
                 authentication-failure-url="/add_account/error"
                 username-parameter="username"
-                password-parameter="password"/>
-        <logout logout-url="/logout" delete-cookies="JSESSIONID"/>
-
+                password-parameter="password"
+                authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler" />
+        <logout logout-url="/logout" logout-success-url="/home" delete-cookies="JSESSIONID"/>
+        <!--enable csrf-->
         <csrf/>
+        <!--enable remember-me-->
+        <remember-me
+                token-validity-seconds="1209600"
+                remember-me-parameter="remember-me"
+                data-source-ref="dataSource" user-service-ref="userService"/>         <!-- 1209600 - 2 weeks -->
     </http>
 
     <authentication-manager>
-
         <authentication-provider user-service-ref="userService">
             <password-encoder ref="encoder"/>
         </authentication-provider>
     </authentication-manager>
 
-
     <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
     <b:bean id="userService" class="by.chmut.hotel.service.impl.UserServiceImpl"/>
 
 
