@@ -34,6 +34,8 @@ public class ReservationController {
 
     private static final Logger logger = Logger.getLogger(ReservationController.class);
 
+    private static final long NULL = 0L;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -154,9 +156,9 @@ public class ReservationController {
 
             return (long) session.getAttribute(TOTAL_SUM);
         }
-        session.setAttribute(TOTAL_SUM, 0L);
+        session.setAttribute(TOTAL_SUM, NULL);
 
-        return 0L;
+        return NULL;
     }
 
     private List<Room> getRooms(HttpSession session) {
