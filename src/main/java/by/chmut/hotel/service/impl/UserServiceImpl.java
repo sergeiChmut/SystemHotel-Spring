@@ -9,16 +9,26 @@ import by.chmut.hotel.service.BaseService;
 import by.chmut.hotel.service.ServiceException;
 import by.chmut.hotel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static by.chmut.hotel.controller.constant.Constants.DUPLICATE_MESSAGE;
-import static by.chmut.hotel.controller.constant.Constants.ROLE_USER;
-import static by.chmut.hotel.service.validation.Validator.isPasswordValid;
+
 
 @Service
 @Transactional
+
 public class UserServiceImpl  extends BaseService<User> implements UserService {
 
     @Autowired
@@ -29,18 +39,6 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User getUserAndValidate(String login, String password) {
-
-        User user = userDao.getUser(login);
-
-        if (isPasswordValid(user, password)) {
-            return user;
-        }
-
-        return null;
-    }
-
-    @Override
     public User getUser(String login) {
 
         User user = userDao.getUser(login);
@@ -49,7 +47,7 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
     }
 
     @Override
-    public User newUser(LoginData loginData) {
+    public User newUser(LoginData loginData) throws ServiceException {
 
         User user = userDao.getUser(loginData.getLogin());
 
@@ -84,5 +82,37 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
 
             }
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws ServiceException  {
+
+        by.chmut.hotel.bean.User user = userDao.getUser(username);
+
+        List<GrantedAuthority> authorities = getAuthorities(user);
+
+        org.springframework.security.core.userdetails.User.UserBuilder builder = null;
+
+        if (user != null) {
+
+            builder = org.springframework.security.core.userdetails.User.withUsername(username);
+            builder.disabled(false);
+            builder.password(user.getPassword());
+            builder.authorities(authorities);
+        } else {
+            throw new ServiceException("User not found.");
+        }
+        return builder.build();
+    }
+
+
+
+    private List<GrantedAuthority> getAuthorities(by.chmut.hotel.bean.User user) {
+
+        List<GrantedAuthority> authList = new ArrayList<>();
+
+        authList.add(new SimpleGrantedAuthority(user.getRole()));
+
+        return authList;
     }
 }

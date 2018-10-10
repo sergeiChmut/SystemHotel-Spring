@@ -4,7 +4,6 @@ import by.chmut.hotel.bean.Reservation;
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface ReservationService extends ServiceI<Reservation>{

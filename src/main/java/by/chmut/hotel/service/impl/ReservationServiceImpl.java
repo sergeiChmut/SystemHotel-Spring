@@ -17,6 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
+
 public class ReservationServiceImpl extends BaseService<Reservation> implements ReservationService {
 
     @Autowired

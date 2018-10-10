@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC
-        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
-        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
 <tiles-definitions>
     <definition name="default" template="/WEB-INF/view/layout/template.jspx">
         <put-attribute name="title" value=""/>
@@ -26,9 +27,9 @@
         <put-attribute name="title" value="Error"/>
         <put-attribute name="body" value="/WEB-INF/view/pages/error.jspx"/>
     </definition>
-    <definition name="/add_account" extends="default">
+    <definition name="/add_account/form" extends="default">
         <put-attribute name="title" value="Add_account"/>
-        <put-attribute name="body" value="/WEB-INF/view/pages/autorization.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/view/pages/add_user.jspx"/>
     </definition>
     <definition name="/payment" extends="default">
         <put-attribute name="title" value="Payment"/>

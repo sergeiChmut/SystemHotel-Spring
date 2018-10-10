@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context
@@ -13,13 +13,15 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="false"/>
 
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="url" value="jdbc:mysql://localhost/HotelSystem2"/>
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="username" value="root"/>
-        <property name="password" value="1234"/>
-        <property name="initialSize" value="2"/>
-        <property name="maxTotal" value="5"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxTotal" value="${jdbc.maxTotal}"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -42,11 +44,5 @@
             </props>
         </property>
     </bean>
-
-    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
-
-    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
 
 </beans>

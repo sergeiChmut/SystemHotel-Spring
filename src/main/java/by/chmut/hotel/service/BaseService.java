@@ -17,7 +17,6 @@ public class BaseService<T> implements ServiceI<T> {
     private Dao<T> baseDao;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public T add(T t) {
         baseDao.add(t);
         return t;

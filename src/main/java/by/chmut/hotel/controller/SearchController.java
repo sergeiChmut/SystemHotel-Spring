@@ -5,49 +5,48 @@ import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static by.chmut.hotel.controller.constant.Constants.*;
 
 @Controller
+
 public class SearchController {
+
+    private static final Logger logger = Logger.getLogger(SearchController.class);
 
     @Autowired
     private RoomService roomService;
 
-    private static final Logger logger = Logger.getLogger(SearchController.class);
+    private MessageSource messageSource;
 
-
-    @RequestMapping(value = "/search")
-    public String showRoom(HttpServletRequest req) {
-
-        List<Room> rooms = roomService.getAllRoom();
-
-        req.getSession().setAttribute("rooms", rooms);
-
-        return "/search";
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
-    @PreAuthorize( "isAuthenticated ()")
-    @RequestMapping(value = "/booknow")
-    public String searchRoom(HttpServletRequest req, @RequestParam(value = "bedType" ,required = false) String bedType,
-                             @RequestParam(value = "checkin",required = false) String checkIn,
-                             @RequestParam(value = "checkout",required = false) String checkOut){
+    @RequestMapping(value = "/search")
+    public String searchRoom(Model model, HttpServletRequest req, Locale locale,
+                             @RequestParam(value = "bedType", required = false) String bedType,
+                             @RequestParam(value = "checkin", required = false) String checkIn,
+                             @RequestParam(value = "checkout", required = false) String checkOut) {
 
-        List<Room> rooms = new ArrayList<>();
+        List<Room> rooms;
 
-        String url = "/search";
+        String page = SEARCH;
 
         try {
+
             if (bedType == null || checkIn == null || checkOut == null) {
 
                 rooms = roomService.getAllRoom();
@@ -57,25 +56,27 @@ public class SearchController {
                 LocalDate checkInDate = LocalDate.parse(checkIn, formatter);
                 LocalDate checkOutDate = LocalDate.parse(checkOut, formatter);
                 int bedTypeInt = Integer.parseInt(bedType);
-                req.getSession().setAttribute("checkIn", checkInDate);
-                req.getSession().setAttribute("checkOut", checkOutDate);
+                req.getSession().setAttribute(CHECKIN, checkInDate);
+                req.getSession().setAttribute(CHECKOUT, checkOutDate);
 
                 rooms = roomService.getAvailableRoom(bedTypeInt,
                         checkInDate, checkOutDate);
             }
+
+            req.getSession().setAttribute(ROOMS, rooms);
+
         } catch (ServiceException e) {
 
             logger.error(e);
 
-            req.getSession().setAttribute("message", "main.error");
+            model.addAttribute(MESSAGE,
+                    messageSource.getMessage(KEY_SEARCH_PAGE_ERROR, new Object[]{}, locale));
 
-            url = "/error";
+            page = ERROR;
 
         }
 
-        req.getSession().setAttribute("rooms", rooms);
-
-        return url;
+        return page;
 
     }
 

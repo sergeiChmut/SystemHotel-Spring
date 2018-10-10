@@ -1,6 +1,5 @@
 package by.chmut.hotel.controller.domain;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,5 @@ public class LoginData {
 	private String city;
 	private String address;
 	private String zip;
-
 
 }

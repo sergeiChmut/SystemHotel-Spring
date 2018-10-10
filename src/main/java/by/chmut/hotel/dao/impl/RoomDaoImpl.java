@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import static by.chmut.hotel.controller.constant.Constants.QUANTITY_MINUTES_FOR_PAYMENT;
 
 @Repository
 public class RoomDaoImpl extends BaseDao<Room> implements RoomDao {

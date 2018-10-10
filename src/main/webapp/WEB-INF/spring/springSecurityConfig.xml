@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <b:beans xmlns="http://www.springframework.org/schema/security"
          xmlns:b="http://www.springframework.org/schema/beans"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.springframework.org/schema/beans
                              http://www.springframework.org/schema/beans/spring-beans.xsd
 		                     http://www.springframework.org/schema/security
 		                     http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http  auto-config="true" use-expressions="true" >
+
         <intercept-url pattern="/search**" access="isAuthenticated()" />
         <intercept-url pattern="/reservation**" access="isAuthenticated()" />
         <intercept-url pattern="/payment**" access="isAuthenticated()" />
@@ -15,29 +16,26 @@
 
         <form-login
                 login-page="/home?showModal"
+                login-processing-url="/login"
                 default-target-url="/search"
-                authentication-failure-url="/loginfail"
+                authentication-failure-url="/add_account/error"
                 username-parameter="username"
                 password-parameter="password"/>
-        <logout logout-success-url="/home?logout" delete-cookies="JSESSIONID"/>
-        <!--enable csrf protection -->
+        <logout logout-url="/logout" delete-cookies="JSESSIONID"/>
+
         <csrf/>
     </http>
 
-
     <authentication-manager>
-        <authentication-provider user-service-ref="customUserDetailsService">
+
+        <authentication-provider user-service-ref="userService">
             <password-encoder ref="encoder"/>
         </authentication-provider>
     </authentication-manager>
 
-    <!--<b:bean id="auth" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
-        <!--<b:property name="userDetailsService" ref="customUserDetailsService"/>-->
-        <!--<b:property name="passwordEncoder" ref="encoder"/>-->
-    <!--</b:bean>-->
-
-    <b:bean id="customUserDetailsService" class="by.chmut.hotel.service.CustomUserDetailsService"/>
 
     <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <b:bean id="userService" class="by.chmut.hotel.service.impl.UserServiceImpl"/>
+
 
 </b:beans>

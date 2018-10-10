@@ -47,6 +47,7 @@
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
+                                <sec:authorize access="isAuthenticated()">
                                 <c:set var="navName"><spring:message code="title.reservation"/></c:set>
                                 <c:choose>
                                     <c:when test="${title eq 'Reservation'}">
@@ -58,7 +59,20 @@
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
-
+                                </sec:authorize>
+                                <sec:authorize access="isAnonymous()">
+                                    <c:set var="navName"><spring:message code="title.addAccount"/></c:set>
+                                    <c:choose>
+                                        <c:when test="${title eq 'Add_account'}">
+                                            <li class="active"><a href="#">${navName}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li>
+                                                <a href="${pageContext.request.contextPath}/add_account/form">${navName}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </sec:authorize>
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                                     <c:set var="navName"><spring:message code="title.administration"/></c:set>
                                     <c:choose>
@@ -72,23 +86,6 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </sec:authorize>
-
-                                <!--old-->
-                                <!--<c:set var="condition" value='${"admin".equalsIgnoreCase(sessionScope.admin)}'/>-->
-                                <!--<c:if test="${condition}">-->
-                                    <!--<c:set var="navName"><spring:message code="title.administration"/></c:set>-->
-                                    <!--<c:choose>-->
-                                        <!--<c:when test="${title eq 'Administration'}">-->
-                                            <!--<li class="active"><a href="#">${navName}</a></li>-->
-                                        <!--</c:when>-->
-                                        <!--<c:otherwise>-->
-                                            <!--<li>-->
-                                                <!--<a href="${pageContext.request.contextPath}/administration">${navName}</a>-->
-                                            <!--</li>-->
-                                        <!--</c:otherwise>-->
-                                    <!--</c:choose>-->
-                                <!--</c:if>-->
-            <!--old-->
                             </ul>
                             <c:url var="fpath" value="${path}?"></c:url>
                             <a id="navbrand" class="navbar-brand col-xs-3" href="#">Hotel Paradise</a>
@@ -109,23 +106,29 @@
                                         <li><a href="${fpath}locale=en"><spring:message code="header.locale.en"/></a></li>
                                     </c:otherwise>
                                 </c:choose>
-                                <c:if test="${not empty user}">
+                                <sec:authorize access="isAuthenticated()">
+                                <sec:authentication var="username" property="principal.username" />
+
                                     <c:set var="basket"><spring:message code="header.order"/></c:set>
                                     <li>
                                         <a href="${pageContext.request.contextPath}/reservation"
                                            data-toggle="tooltip" title="${basket}"><span
                                                 class="glyphicon glyphicon-list-alt"></span></a></li>
 
-                                    <li><p id="hello" class="text"><spring:message code="header.hello"/>, ${user.name}!</p>
+                                    <li><p id="hello" class="text"><spring:message code="header.hello"/>, ${username}!</p>
                                     </li>
-                                </c:if>
-                                <c:if test="${not empty user}">
-                                    <li><a href="${pageContext.request.contextPath}/logout"><span
-                                            class="glyphicon glyphicon-user"></span><spring:message code="header.signout"/></a>
+
+                                    <li>
+                                        <c:url var="logoutUrl" value="/logout"/>
+                                        <form action="${logoutUrl}" id="logout" method="post" style="display:none;height: 0" >
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        </form>
+                                        <a href="#" onclick="document.getElementById('logout').submit();"><span
+                                            class="glyphicon glyphicon-log-out"></span><spring:message code="header.signout"/></a>
                                     </li>
-                                </c:if>
-                                <c:if test="${empty user}">
-                                    <!--and not (commandName eq 'Login'-->
+                                </sec:authorize>
+                                <sec:authorize access="isAnonymous()" >
+
                                     <li>
                                         <button id="bntlog"
                                                 onclick="document.getElementById('id01').style.display='block'"
@@ -133,7 +136,8 @@
                                                 class="glyphicon glyphicon-log-in"></span><spring:message code="header.signin"/>
                                         </button>
                                     </li>
-                                </c:if>
+
+                                </sec:authorize>
                             </ul>
 
                         </div>
@@ -145,8 +149,8 @@
 
     <!--  Modal  -->
         <div id="id01" class="modal">
-            <!--<spring:url value="/j_spring_security_check" var="loginUrl" />-->
-            <form class="modal-content animate" action="login" method="post">
+
+            <form class="modal-content animate" action="${pageContext.request.contextPath}/login" method="post">
 
                 <div class="container">
                     <label for="username"><spring:message code="login.login"/></label>
@@ -167,7 +171,7 @@
                     <button id="btmodcl" type="button" onclick="document.getElementById('id01').style.display='none'"
                             class="cancelbtn"><spring:message code="login.cancel"/></button>
                     <span id="joinnow" class="regist"><spring:message code="login.reginf"/>
-                    <a href="${pageContext.request.contextPath}/add_account">
+                    <a href="${pageContext.request.contextPath}/add_account/form">
                         <spring:message code="login.regist"/>?</a></span><span class="psw">
                     <spring:message code="login.forgot"/><a href="#"><spring:message code="login.password"/>?</a></span>
                 </div>

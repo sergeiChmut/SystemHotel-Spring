@@ -4,6 +4,8 @@ import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.dto.RoomDto;
 import by.chmut.hotel.dao.ReservationDao;
 import by.chmut.hotel.bean.Reservation;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class ReservationDaoImpl extends BaseDao<Reservation> implements ReservationDao {
 
     public ReservationDaoImpl() {

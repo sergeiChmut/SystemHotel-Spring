@@ -17,7 +17,7 @@ public class AdminController {
     @Autowired
     private DtoService dtoService;
 
-    private static final Logger logger = Logger.getLogger(LoginController.class);
+    private static final Logger logger = Logger.getLogger(AdminController.class);
 
     @RequestMapping(value = "/administration")
 

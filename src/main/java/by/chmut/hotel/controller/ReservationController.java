@@ -1,55 +1,85 @@
 package by.chmut.hotel.controller;
 
+import by.chmut.hotel.bean.Reservation;
 import by.chmut.hotel.bean.Room;
 import by.chmut.hotel.bean.User;
 import by.chmut.hotel.service.ReservationService;
 import by.chmut.hotel.service.RoomService;
 import by.chmut.hotel.service.ServiceException;
+import by.chmut.hotel.service.UserService;
 import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import static by.chmut.hotel.controller.constant.Constants.*;
 
 @Controller
 
 public class ReservationController {
 
+    private static final Logger logger = Logger.getLogger(ReservationController.class);
+
+    @Autowired
+    private UserService userService;
     @Autowired
     private ReservationService reservationService;
     @Autowired
     private RoomService roomService;
 
-    private static final Logger logger = Logger.getLogger(ReservationController.class);
+    private MessageSource messageSource;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/reservation")
-    public String makeReservation(HttpServletRequest req) {
+    public String makeReservation(Model model, HttpServletRequest req, Authentication authentication, Locale locale) {
+
         HttpSession session = req.getSession();
-        session.removeAttribute("error");
+
         long totalSum = getTotalSum(session);
+
         List<Room> temporaryRooms = getRooms(session);
-        Integer roomId = (Integer) session.getAttribute("roomId");
-        Integer temporaryNumber = (Integer) session.getAttribute("tempNum");
-        User user = (User) session.getAttribute("user");
+
+        Integer roomId = (Integer) session.getAttribute(ROOM_ID);
+
+        Integer temporaryNumber = (Integer) session.getAttribute(TEMPORARY_NUMBER);
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        User user = userService.getUser(userDetails.getUsername());
 
         // search - if user user has paid reservation - set to session for view
         setPaidRoomsInSession(req, user);
+
+        String page = RESERVATION;
 
         try {
             // Add room
             if (roomId != null) {
                 Room room = getRoomById(req, roomId);
                 temporaryRooms.add(room);
-//                reservationService.save(new Reservation(user.getId(), room.getId(), room.getCheckIn(), room.getCheckOut()));
+                saveReservation(user, room);
                 totalSum += room.getPrice();
-                session.removeAttribute("roomId");
-                session.setAttribute("tempRooms", temporaryRooms);
-                session.setAttribute("totalSum", totalSum);
+                session.removeAttribute(ROOM_ID);
+                session.setAttribute(TEMPORARY_ROOMS, temporaryRooms);
+                session.setAttribute(TOTAL_SUM, totalSum);
             }
             // Remove room
             if (temporaryNumber != null) {
@@ -57,27 +87,41 @@ public class ReservationController {
                 temporaryRooms.remove(room);
                 reservationService.deleteTemporaryReservation(user.getId(), room);
                 totalSum -= room.getPrice();
-                session.removeAttribute("tempNum");
-                session.setAttribute("tempRooms", temporaryRooms);
-                session.setAttribute("totalSum", totalSum);
+                session.removeAttribute(TEMPORARY_NUMBER);
+                session.setAttribute(TEMPORARY_ROOMS, temporaryRooms);
+                session.setAttribute(TOTAL_SUM, totalSum);
+            }
+
+            // set Empty message
+            if (temporaryRooms.isEmpty()) {
+                req.setAttribute(EMPTY_MESSAGE, KEY_RESERVATION_EMPTY_LIST);
             }
         } catch (ServiceException e) {
             logger.error(e);
-            req.getSession().setAttribute("error", "errorReservation");
+            model.addAttribute(MESSAGE,
+                    messageSource.getMessage(KEY_RESERVATION_PAGE_ERROR, new Object[]{}, locale));
+
+            page = ERROR;
         }
 
-
-        // set Empty message
-        if (temporaryRooms.isEmpty()) {
-            req.setAttribute("emptyMsg", "reserv.emptyList");
-        }
-
-        return "/reservation";
+        return page;
     }
+
+    private void saveReservation(User user, Room room) {
+        Reservation reservation = new Reservation();
+        reservation.setUser(user);
+        reservation.setRoom(room);
+        reservation.setCheckIn(room.getCheckIn());
+        reservation.setCheckOut(room.getCheckOut());
+        reservation.setDate(LocalDateTime.now());
+        reservation.setPayment(UNPAID);
+        reservationService.add(reservation);
+    }
+
 
     private void setPaidRoomsInSession(HttpServletRequest req, User user) {
         try {
-            req.getSession().setAttribute("paidRooms", reservationService.getPaidRoomsIfUserHasThem(user));
+            req.getSession().setAttribute(PAID_ROOMS, reservationService.getPaidRoomsIfUserHasThem(user));
         } catch (ServiceException e) {
             logger.error(e);
         }
@@ -88,8 +132,8 @@ public class ReservationController {
         Room result;
         result = roomService.get(roomId);
         result.setTemporaryNumber((int) (Math.random() * 1000000) + (int) (Math.random() * 1000));
-        result.setCheckIn((LocalDate) req.getSession().getAttribute("checkIn"));
-        result.setCheckOut((LocalDate) req.getSession().getAttribute("checkOut"));
+        result.setCheckIn((LocalDate) req.getSession().getAttribute(CHECKIN));
+        result.setCheckOut((LocalDate) req.getSession().getAttribute(CHECKOUT));
         return result;
     }
 
@@ -106,18 +150,18 @@ public class ReservationController {
 
     private long getTotalSum(HttpSession session) {
 
-        if (session.getAttribute("totalSum") != null) {
+        if (session.getAttribute(TOTAL_SUM) != null) {
 
-            return (long) session.getAttribute("totalSum");
+            return (long) session.getAttribute(TOTAL_SUM);
         }
-        session.setAttribute("totalSum", 0L);
+        session.setAttribute(TOTAL_SUM, 0L);
 
         return 0L;
     }
 
     private List<Room> getRooms(HttpSession session) {
 
-        List<Room> result = (List<Room>) session.getAttribute("tempRooms");
+        List<Room> result = (List<Room>) session.getAttribute(TEMPORARY_ROOMS);
 
         if (result != null) {
             return result;
@@ -125,7 +169,7 @@ public class ReservationController {
 
         result = new ArrayList<>();
 
-        session.setAttribute("tempRooms", new ArrayList<Room>());
+        session.setAttribute(TEMPORARY_ROOMS, new ArrayList<Room>());
 
         return result;
     }

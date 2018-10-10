@@ -89,6 +89,8 @@
                             <div class="col-xs-offset-3 col-xs-6">
                                 <c:set var="submit"><spring:message code="payment.submit"/></c:set>
                                 <input type="submit" class="btn btn-primary col-xs-3" value="${submit}"/>
+                                <input type="hidden" name="${_csrf.parameterName}"
+                                       value="${_csrf.token}" />
                             </div>
                         </div>
                     </form>
