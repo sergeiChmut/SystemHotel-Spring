@@ -17,7 +17,7 @@ INSERT INTO Contacts(email, telephone, country, city, address, zip) VALUES ("cl@
 INSERT INTO Contacts(email, telephone, country, city, address, zip) VALUES ("d@tut.by","37533454","Russia","Smolensk","some adr","220000");
 INSERT INTO Contacts(email, telephone, country, city, address, zip) VALUES ("rt@tut.by","05424454","Belarus","Vitebsk","some adr","220000");
 INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user1", "$2a$10$Zar85MYgJBQidp/AOxOi9uZZLrvKH1VFMtH1jetIGkiqTmhSg7xgi","Sergei", "Leshko", "ROLE_USER",1);
-INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user2", "$2a$10$Zar85MYgJBQidp/AOxOi9uZZLrvKH1VFMtH1jetIGkiqTmhSg7xgi", "Leshko", "ROLE_USER",1);
+INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user2", "$2a$10$Zar85MYgJBQidp/AOxOi9uZZLrvKH1VFMtH1jetIGkiqTmhSg7xgi", "Vasya", "Leshko", "ROLE_USER",1);
 INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user3", "$2a$10$Zar85MYgJBQidp/AOxOi9uZZLrvKH1VFMtH1jetIGkiqTmhSg7xgi","Sasha", "Leshko", "ROLE_USER",1);
 INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user4", "$2a$10$Zar85MYgJBQidp/AOxOi9uZZLrvKH1VFMtH1jetIGkiqTmhSg7xgi","Vanya", "Puko", "ROLE_USER",2);
 INSERT INTO Users (login, password, name, lastname, role, contact_id) VALUES ("user5", "$2a$10$Zar85MYgJBQidp/AOxOi9uZZLrvKH1VFMtH1jetIGkiqTmhSg7xgi","Sveta", "Puko", "ROLE_USER",2);
