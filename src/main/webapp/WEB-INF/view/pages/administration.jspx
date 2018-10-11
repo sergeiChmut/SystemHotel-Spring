@@ -3,59 +3,121 @@
           xmlns="http://www.w3.org/1999/xhtml" version="2.0"
           xmlns:spring="http://www.springframework.org/tags">
 
-    <div class="container col-xs-12" style="background-color:#e6f7d9;">
+    <div class="container col-xs-12" style="background-color:#e6f7d9;height: 1000px">
         <c:if test="${not empty message}">
             <div class="alert alert-warning col-xs-6 left-arrow">
                 <strong>${message}</strong>
             </div>
         </c:if>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-5 col-xs-offset-2 text-right" style="padding: 10px;">
-                    <p style="font-size: 15px"><spring:message code="admin.message"/></p>
+        <div class="container col-xs-12" style="height: 50px;background-color: transparent">
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-info" style="font-size: 30px;color: black" href="#"><spring:message code="admin.choose"/></a>
                 </div>
-                <div class="col-xs-1">
-                    <button class="btn btn-default" data-toggle="collapse" data-target="#demo"><spring:message code="admin.view"/></button>
-                </div>
+                <ul class="nav navbar-nav">
+                    <c:set var="navName"><spring:message code="admin.list"/></c:set>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/administration/showclient">${navName}</a>
+                    </li>
+                    <c:set var="navName"><spring:message code="admin.addRoom"/></c:set>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/administration/addRoom">${navName}</a>
+                    </li>
+                    <c:set var="navName"><spring:message code="admin.blockRoom"/></c:set>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/administration/lockRoom">${navName}</a>
+                    </li>
+                    <!--<c:set var="navName"><spring:message code="title.addAccount"/></c:set>-->
+                    <!--<li>-->
+                    <!--<a href="${pageContext.request.contextPath}/add_account/form">${navName}</a>-->
+                    <!--</li>-->
+                    <!--<c:set var="navName"><spring:message code="title.administration"/></c:set>-->
+                    <!--<li>-->
+                    <!--<a href="${pageContext.request.contextPath}/administration">${navName}</a>-->
+                    <!--</li>-->
+                </ul>
             </div>
-            <div id="demo" class="collapse">
-                <div class="row col-xs-12 ">
+        </nav>
+
+        <c:choose>
+            <c:when test="${adminPage eq 'list'}">
+                <div class="container">
                     <div class="row">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th class="col-xs-1"><spring:message code="admin.roomNum"/></th>
-                                <th class="col-xs-1"><span class="glyphicon glyphicon-bed"></span></th>
-                                <th class="col-xs-1"><spring:message code="reserv.checkin"/></th>
-                                <th class="col-xs-1"><spring:message code="reserv.checkout"/></th>
-                                <th class="col-xs-2"><spring:message code="admin.name"/></th>
-                                <th class="col-xs-2"><spring:message code="admin.lname"/></th>
-                                <th class="col-xs-2"><spring:message code="admin.tel"/></th>
-                                <th class="col-xs-1"><spring:message code="admin.city"/></th>
-                                <th class="col-xs-1"><spring:message code="admin.price"/></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="clientInfo" items="${sessionScope.client}" varStatus="status">
-                                <tr>
-                                    <td class="col-xs-1">${clientInfo.roomNumber}</td>
-                                    <td class="col-xs-1">${clientInfo.bedType}</td>
-                                    <td class="col-xs-1">${clientInfo.checkIn}</td>
-                                    <td class="col-xs-1">${clientInfo.checkOut}</td>
-                                    <td class="col-xs-2">${clientInfo.name}</td>
-                                    <td class="col-xs-2">${clientInfo.lastname}</td>
-                                    <td class="col-xs-2">${clientInfo.telephone}</td>
-                                    <td class="col-xs-1">${clientInfo.city}</td>
-                                    <td class="col-xs-1">${clientInfo.price}</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                        <div class="col-xs-5 col-xs-offset-2 text-right" style="padding: 10px;">
+                            <p style="font-size: 15px"><spring:message code="admin.message"/></p>
+                        </div>
+                        <div class="col-xs-1">
+                            <button class="btn btn-default" data-toggle="collapse" data-target="#demo"><spring:message
+                                    code="admin.view"/></button>
+                        </div>
+                    </div>
+                    <div id="demo" class="collapse">
+                        <div class="row col-xs-12 ">
+                            <div class="row">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-xs-1"><spring:message code="admin.roomNum"/></th>
+                                        <th class="col-xs-1"><span class="glyphicon glyphicon-bed"></span></th>
+                                        <th class="col-xs-1"><spring:message code="reserv.checkin"/></th>
+                                        <th class="col-xs-1"><spring:message code="reserv.checkout"/></th>
+                                        <th class="col-xs-2"><spring:message code="admin.name"/></th>
+                                        <th class="col-xs-2"><spring:message code="admin.lname"/></th>
+                                        <th class="col-xs-2"><spring:message code="admin.tel"/></th>
+                                        <th class="col-xs-1"><spring:message code="admin.city"/></th>
+                                        <th class="col-xs-1"><spring:message code="admin.price"/></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="clientInfo" items="${client}" varStatus="status">
+                                        <tr>
+                                            <td class="col-xs-1">${clientInfo.roomNumber}</td>
+                                            <td class="col-xs-1">${clientInfo.bedType}</td>
+                                            <td class="col-xs-1">${clientInfo.checkIn}</td>
+                                            <td class="col-xs-1">${clientInfo.checkOut}</td>
+                                            <td class="col-xs-2">${clientInfo.name}</td>
+                                            <td class="col-xs-2">${clientInfo.lastname}</td>
+                                            <td class="col-xs-2">${clientInfo.telephone}</td>
+                                            <td class="col-xs-1">${clientInfo.city}</td>
+                                            <td class="col-xs-1">${clientInfo.price}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </c:when>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${adminPage eq 'add'}">
+                <div class="container">
+
+                    <h4> This for add new rooms</h4>
+
+                </div>
+            </c:when>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${adminPage eq 'lock'}">
+                <div class="container">
+
+                    <h4> This for locking room</h4>
+
+                </div>
+            </c:when>
+        </c:choose>
 
     </div>
 

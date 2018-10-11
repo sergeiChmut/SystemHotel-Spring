@@ -16,6 +16,7 @@ import static by.chmut.hotel.controller.constant.Constants.*;
 
 
 @Controller
+@RequestMapping(value = "/administration")
 public class AdminController {
 
     private static final Logger logger = Logger.getLogger(AdminController.class);
@@ -31,10 +32,10 @@ public class AdminController {
     }
 
 
+    @RequestMapping(value = "/showclient")
+    public String showClients(Model model, Locale locale) {
 
-    @RequestMapping(value = "/administration")
-
-    public String admin(Model model, Locale locale) {
+        model.addAttribute(SECTION,CLIENTS);
 
         try {
 
@@ -45,10 +46,28 @@ public class AdminController {
             logger.error(e);
 
             model.addAttribute(MESSAGE,
-                    messageSource.getMessage(KEY_RESERVATION_PAGE_ERROR, new Object[]{}, locale));
+                    messageSource.getMessage(KEY_ADMIN_PAGE_ERROR, new Object[]{}, locale));
 
         }
 
         return ADMIN_PAGE;
     }
+
+
+    @RequestMapping(value = "/addRoom")
+    public String addRoom(Model model) {
+
+        model.addAttribute(SECTION, NEW_ROOM);
+
+        return ADMIN_PAGE;
+    }
+
+    @RequestMapping(value = "/lockRoom")
+    public String lockRoom(Model model) {
+
+        model.addAttribute(SECTION, LOCK);
+
+        return ADMIN_PAGE;
+    }
+
 }

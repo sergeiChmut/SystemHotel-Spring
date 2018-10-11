@@ -38,5 +38,9 @@ public final class Constants {
     public static final String KEY_RESERVATION_PAGE_ERROR = "errorReservation";
     public static final String KEY_ADMIN_PAGE_ERROR = "errorAdmin";
     public static final String SUCCESSFULLY_COMPLETED = "true";
+    public static final String SECTION = "adminPage";
+    public static final String CLIENTS = "list";
+    public static final String NEW_ROOM = "add";
+    public static final String LOCK = "lock";
 
 }
