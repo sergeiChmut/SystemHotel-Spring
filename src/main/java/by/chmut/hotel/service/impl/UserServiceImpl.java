@@ -9,12 +9,9 @@ import by.chmut.hotel.service.BaseService;
 import by.chmut.hotel.service.ServiceException;
 import by.chmut.hotel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,8 +69,8 @@ public class UserServiceImpl  extends BaseService<User> implements UserService {
                 user.setName(loginData.getFirstName());
                 user.setLastName(loginData.getLastName());
                 user.setRole("ROLE_USER");
-                user = userDao.add(user);
                 user.setContacts(contacts);
+                user = userDao.add(user);
                 return user;
 
             } catch (Exception e) {

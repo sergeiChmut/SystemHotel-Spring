@@ -170,6 +170,24 @@
         $(document).ready(function () {
             $('#identicalForm').bootstrapValidator();
         });
+        var pass1 = document.getElementById("inputPassword");
+        var pass2 = document.getElementById("confirmPassword");
+        pass1.addEventListener("change", function(event){
+            checkPass();
+        });
+        pass2.addEventListener("change", function(event){
+            checkPass();
+        });
+
+        function checkPass(){
+            if(pass1.value != pass2.value){
+                document.getElementById("submit").disabled = true;
+                $('#status').html("Entered Password is not matching!! Try Again");
+            }else{
+                $('#status').html("");
+                document.getElementById("submit").disabled = false;
+            }
+        }
     </script>
 
 </jsp:root>

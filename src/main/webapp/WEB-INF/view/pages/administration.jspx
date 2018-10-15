@@ -87,7 +87,7 @@
                                             <td class="col-xs-2">${clientInfo.lastname}</td>
                                             <td class="col-xs-2">${clientInfo.telephone}</td>
                                             <td class="col-xs-1">${clientInfo.city}</td>
-                                            <td class="col-xs-1">${clientInfo.price}</td>
+                                            <td class="col-xs-1">${clientInfo.price/100}</td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>

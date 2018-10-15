@@ -9,6 +9,7 @@ public final class Constants {
     public static final String PAYMENT = "/payment";
     public static final String ERROR = "/error";
     public static final String ADMIN_PAGE = "/administration";
+    public static final String LOGIN = "/home?showModal";
 
     public static final String DUPLICATE_MESSAGE = "Duplicate user";
     public static final String LOGIN_FAILED_MESSAGE = "Login failed detected";

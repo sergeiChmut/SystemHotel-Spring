@@ -22,7 +22,7 @@ public class RoomDtoImpl implements Dto {
 
     @Override
     public List<RoomDto> getAllRoomsWhereCheckInOrCheckOutEqualsDate(LocalDate date){
-        List<Reservation> res = em.createQuery("from Reservation res where res.checkIn = :date or res.checkOut = :date").setParameter("date", date)
+        List<Reservation> res = em.createQuery("from Reservation res where res.payment = 1 and (res.checkIn = :date or res.checkOut = :date)").setParameter("date", date)
                 .getResultList();
         List<RoomDto> result = new ArrayList<>();
         for (Reservation reservation:res) {

@@ -1,6 +1,5 @@
 package by.chmut.hotel.controller;
 
-import by.chmut.hotel.bean.User;
 import by.chmut.hotel.controller.domain.LoginData;
 import by.chmut.hotel.service.ServiceException;
 import by.chmut.hotel.service.UserService;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,18 +53,16 @@ public class AddAccountController {
 
 
     @RequestMapping(value = "/create_user")
-
+    @Transactional
     public String createUser(Model model, @ModelAttribute(LOGINDATA) LoginData loginData, Locale locale) {
 
         String message;
 
-        String page = RESERVATION;
-
         try {
 
-            User user = userService.newUser(loginData);
+            userService.newUser(loginData);
 
-            userService.loadUserByUsername(user.getLogin());
+            return "redirect:" + LOGIN;
 
         } catch (ServiceException e) {
 
@@ -78,11 +76,9 @@ public class AddAccountController {
 
             model.addAttribute(MESSAGE, messageSource.getMessage(message, new Object[]{}, locale));
 
-            page = ERROR;
         }
 
-        return page;
-
+        return ERROR;
     }
 
 
