@@ -6,7 +6,7 @@ JD2 IT-Academy Task Application - Layered Architecture
 This application is the search and reservation of rooms in the hotel "Paradise" according
  to the search terms: dates of stay, number of persons, and others.
  
-The application is available in test on http://hotel.mycloud.by/
+The application is available in test mode on http://hotel.mycloud.by/
  
 ## Usage
 
