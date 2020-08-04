@@ -10,7 +10,7 @@ The application is available in test mode on http://hotel.mycloud.by/
  
  # Start easily with Docker in 2 steps:
   1. Install **[Docker](https://www.docker.com/products/docker-desktop)** 
-  2. Deploy Application. See more [Deployment with Docker](###Deployment with Docker) 
+  2. Deploy Application. See more [Deployment with Docker](#Deployment with Docker) 
  
 
 ## Usage
